@@ -1,0 +1,40 @@
+/* Service Member Health Theme */
+/* Navy blue theme for military healthcare services */
+
+:root {
+  /* Primary colors - Navy/military palette */
+  --uswds-color-primary: #112e51;      /* Navy blue */
+  --uswds-color-primary-dark: #162e51; /* Darker navy */
+  --uswds-color-secondary: #c42525;    /* Red accent */
+
+  /* Typography */
+  --uswds-font-sans: "Public Sans", -apple-system, sans-serif;
+
+  /* Spacing - More compact, formal feel */
+  --hero-padding: 60px 20px;
+  --heading-size-xl: 2.5rem;
+
+  /* Component styles */
+  --card-border-radius: 0;
+  --card-shadow: none;
+  --card-border: 2px solid #112e51;
+}
+
+/* Site-specific component overrides */
+.hero {
+  background: linear-gradient(90deg, #112e51 0%, #1a4480 100%);
+  border-top: 8px solid var(--uswds-color-secondary);
+  border-radius: var(--card-border-radius);
+  padding: var(--hero-padding);
+}
+
+.card {
+  border: var(--card-border);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--card-shadow);
+}
+
+/* Formal, authoritative aesthetic */
+body {
+  --background-color: #ffffff;
+}

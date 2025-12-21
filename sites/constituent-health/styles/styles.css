@@ -1,0 +1,37 @@
+/* Constituent Health Theme */
+/* Light blue theme for citizen-facing healthcare services */
+
+:root {
+  /* Primary colors - Light blue palette */
+  --uswds-color-primary: #0071bc;      /* Light blue */
+  --uswds-color-primary-dark: #205493; /* Darker blue */
+  --uswds-color-secondary: #02bfe7;    /* Cyan accent */
+
+  /* Typography */
+  --uswds-font-sans: "Source Sans Pro", -apple-system, sans-serif;
+
+  /* Spacing - More spacious, friendly feel */
+  --hero-padding: 80px 20px;
+  --heading-size-xl: 3rem;
+
+  /* Component styles */
+  --card-border-radius: 12px;
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Site-specific component overrides */
+.hero {
+  background: linear-gradient(135deg, #0071bc 0%, #02bfe7 100%);
+  border-radius: var(--card-border-radius);
+  padding: var(--hero-padding);
+}
+
+.card {
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--card-shadow);
+}
+
+/* Modern, approachable aesthetic */
+body {
+  --background-color: #f8f9fa;
+}
