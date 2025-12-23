@@ -1,0 +1,70 @@
+/**
+ * USWDS 3.0 Border Radius Design Tokens
+ * Based on: https://designsystem.digital.gov/design-tokens/border-radius/
+ *
+ * Border radius values for rounded corners
+ * Used for cards, buttons, inputs, and other UI elements
+ */
+
+:root {
+  /* ========================================
+     BASE BORDER RADIUS
+     Standard rounding scale
+     ======================================== */
+
+  /* No rounding */
+  --uswds-radius-0: 0;
+
+  /* Subtle rounding */
+  --uswds-radius-sm: 2px;
+
+  /* Standard rounding */
+  --uswds-radius-md: 0.25rem;  /* 4px */
+
+  /* Medium rounding */
+  --uswds-radius-lg: 0.5rem;   /* 8px */
+
+  /* Large rounding */
+  --uswds-radius-xl: 1rem;     /* 16px */
+
+  /* Pill/Full rounding */
+  --uswds-radius-pill: 99rem;
+
+  /* Circle (50%) */
+  --uswds-radius-circle: 50%;
+
+  /* ========================================
+     COMPONENT-SPECIFIC RADIUS
+     ======================================== */
+
+  /* Buttons */
+  --uswds-radius-button: var(--uswds-radius-md);
+
+  /* Cards */
+  --uswds-radius-card: var(--uswds-radius-lg);
+
+  /* Input fields */
+  --uswds-radius-input: var(--uswds-radius-sm);
+
+  /* Modals and dialogs */
+  --uswds-radius-modal: var(--uswds-radius-lg);
+
+  /* Badges and tags */
+  --uswds-radius-badge: var(--uswds-radius-pill);
+
+  /* Avatars */
+  --uswds-radius-avatar: var(--uswds-radius-circle);
+
+  /* Alerts and notifications */
+  --uswds-radius-alert: var(--uswds-radius-md);
+
+  /* Tooltips */
+  --uswds-radius-tooltip: var(--uswds-radius-sm);
+
+  /* ========================================
+     FOCUS OUTLINE RADIUS
+     Match element radius for accessible focus states
+     ======================================== */
+
+  --uswds-radius-focus: var(--uswds-radius-md);
+}

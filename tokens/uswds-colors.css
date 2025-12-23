@@ -1,0 +1,106 @@
+/**
+ * USWDS 3.0 Color Design Tokens
+ * Based on: https://designsystem.digital.gov/design-tokens/color/
+ *
+ * These are the base USWDS color palette.
+ * Sites can override theme colors in their site-specific styles.
+ */
+
+:root {
+  /* ========================================
+     PRIMARY COLORS
+     Default: Blue palette
+     ======================================== */
+  --uswds-color-primary-lighter: #d9e8f6;
+  --uswds-color-primary-light: #73b3e7;
+  --uswds-color-primary: #005ea2;
+  --uswds-color-primary-vivid: #0050d8;
+  --uswds-color-primary-dark: #1a4480;
+  --uswds-color-primary-darker: #162e51;
+
+  /* ========================================
+     SECONDARY COLORS
+     Default: Red palette
+     ======================================== */
+  --uswds-color-secondary-lighter: #f3e1e4;
+  --uswds-color-secondary-light: #f2938c;
+  --uswds-color-secondary: #d83933;
+  --uswds-color-secondary-vivid: #e41d3d;
+  --uswds-color-secondary-dark: #b50909;
+  --uswds-color-secondary-darker: #8b0a03;
+
+  /* ========================================
+     ACCENT COOL COLORS
+     Cyan/Teal palette
+     ======================================== */
+  --uswds-color-accent-cool-lighter: #e1f3f8;
+  --uswds-color-accent-cool-light: #97d4ea;
+  --uswds-color-accent-cool: #00bde3;
+  --uswds-color-accent-cool-dark: #28a0cb;
+  --uswds-color-accent-cool-darker: #07648d;
+
+  /* ========================================
+     ACCENT WARM COLORS
+     Orange palette
+     ======================================== */
+  --uswds-color-accent-warm-lighter: #f2e4d4;
+  --uswds-color-accent-warm-light: #ffbc78;
+  --uswds-color-accent-warm: #fa9441;
+  --uswds-color-accent-warm-dark: #c05600;
+  --uswds-color-accent-warm-darker: #775540;
+
+  /* ========================================
+     BASE/GRAY COLORS
+     Neutral palette
+     ======================================== */
+  --uswds-color-base-lightest: #f0f0f0;
+  --uswds-color-base-lighter: #dfe1e2;
+  --uswds-color-base-light: #a9aeb1;
+  --uswds-color-base: #71767a;
+  --uswds-color-base-dark: #565c65;
+  --uswds-color-base-darker: #3d4551;
+  --uswds-color-base-darkest: #1b1b1b;
+
+  /* ========================================
+     INK & BACKGROUND
+     Core text and background colors
+     ======================================== */
+  --uswds-color-ink: #1b1b1b;
+  --uswds-color-white: #ffffff;
+  --uswds-color-black: #000000;
+
+  /* ========================================
+     STATE COLORS
+     Semantic colors for UI states
+     ======================================== */
+  --uswds-color-success-lighter: #ecf3ec;
+  --uswds-color-success-light: #70e17b;
+  --uswds-color-success: #00a91c;
+  --uswds-color-success-dark: #4d8055;
+  --uswds-color-success-darker: #446443;
+
+  --uswds-color-warning-lighter: #faf3d1;
+  --uswds-color-warning-light: #fee685;
+  --uswds-color-warning: #ffbe2e;
+  --uswds-color-warning-dark: #e5a000;
+  --uswds-color-warning-darker: #936f38;
+
+  --uswds-color-error-lighter: #f4e3db;
+  --uswds-color-error-light: #f39268;
+  --uswds-color-error: #d54309;
+  --uswds-color-error-dark: #b50909;
+  --uswds-color-error-darker: #6f3331;
+
+  --uswds-color-info-lighter: #e7f6f8;
+  --uswds-color-info-light: #99deea;
+  --uswds-color-info: #00bde3;
+  --uswds-color-info-dark: #009ec1;
+  --uswds-color-info-darker: #2e6276;
+
+  /* ========================================
+     DISABLED STATE
+     ======================================== */
+  --uswds-color-disabled-light: #e6e6e6;
+  --uswds-color-disabled: #c9c9c9;
+  --uswds-color-disabled-dark: #adadad;
+}

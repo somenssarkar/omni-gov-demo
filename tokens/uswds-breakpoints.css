@@ -1,0 +1,102 @@
+/**
+ * USWDS 3.0 Breakpoint Design Tokens
+ * Based on: https://designsystem.digital.gov/design-tokens/breakpoints/
+ *
+ * Responsive design breakpoints for media queries
+ * Mobile-first approach (min-width)
+ */
+
+:root {
+  /* ========================================
+     BREAKPOINT VALUES
+     Width thresholds for responsive layouts
+     ======================================== */
+
+  /* Card width (minimum viewport for card layouts) */
+  --uswds-breakpoint-card: 10rem;        /* 160px */
+  --uswds-breakpoint-card-lg: 15rem;     /* 240px */
+
+  /* Mobile (small phones) */
+  --uswds-breakpoint-mobile: 20rem;      /* 320px */
+
+  /* Mobile large (standard phones) */
+  --uswds-breakpoint-mobile-lg: 30rem;   /* 480px */
+
+  /* Tablet (small tablets, large phones) */
+  --uswds-breakpoint-tablet: 40rem;      /* 640px */
+
+  /* Tablet large (standard tablets) */
+  --uswds-breakpoint-tablet-lg: 55rem;   /* 880px */
+
+  /* Desktop (laptops, small desktops) */
+  --uswds-breakpoint-desktop: 64rem;     /* 1024px */
+
+  /* Desktop large (large desktops) */
+  --uswds-breakpoint-desktop-lg: 75rem;  /* 1200px */
+
+  /* Widescreen (extra large displays) */
+  --uswds-breakpoint-widescreen: 87.5rem; /* 1400px */
+
+  /* ========================================
+     CONTAINER MAX WIDTHS
+     Content container limits at each breakpoint
+     ======================================== */
+
+  /* Mobile containers */
+  --uswds-max-width-mobile: 20rem;       /* 320px */
+  --uswds-max-width-mobile-lg: 30rem;    /* 480px */
+
+  /* Tablet containers */
+  --uswds-max-width-tablet: 40rem;       /* 640px */
+  --uswds-max-width-tablet-lg: 55rem;    /* 880px */
+
+  /* Desktop containers */
+  --uswds-max-width-desktop: 64rem;      /* 1024px */
+  --uswds-max-width-desktop-lg: 75rem;   /* 1200px */
+
+  /* Widescreen container */
+  --uswds-max-width-widescreen: 87.5rem; /* 1400px */
+
+  /* ========================================
+     CONTENT MEASURE (Reading Width)
+     Optimal line length for readability
+     ======================================== */
+
+  /* Narrow reading width */
+  --uswds-max-width-prose-narrow: 44ex;
+
+  /* Standard reading width */
+  --uswds-max-width-prose: 60ex;
+
+  /* Wide reading width */
+  --uswds-max-width-prose-wide: 88ex;
+}
+
+/* ========================================
+   MEDIA QUERY HELPERS
+   Use these in @media rules
+   ======================================== */
+
+/*
+USAGE EXAMPLES:
+
+Mobile-first (min-width):
+  @media (min-width: var(--uswds-breakpoint-tablet)) {
+    // Tablet and above styles
+  }
+
+Desktop-down (max-width):
+  @media (max-width: calc(var(--uswds-breakpoint-desktop) - 0.01rem)) {
+    // Below desktop styles
+  }
+
+Between breakpoints:
+  @media (min-width: var(--uswds-breakpoint-tablet)) and (max-width: calc(var(--uswds-breakpoint-desktop) - 0.01rem)) {
+    // Tablet only styles
+  }
+
+COMMON BREAKPOINT RANGES:
+- Mobile: 0 - 639px
+- Tablet: 640px - 1023px
+- Desktop: 1024px+
+*/

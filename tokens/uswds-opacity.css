@@ -1,0 +1,96 @@
+/**
+ * USWDS 3.0 Opacity Design Tokens
+ * Based on: https://designsystem.digital.gov/design-tokens/opacity/
+ *
+ * Transparency values for overlays, disabled states, and visual effects
+ * Values range from fully transparent (0) to fully opaque (1)
+ */
+
+:root {
+  /* ========================================
+     BASE OPACITY SCALE
+     Standard transparency levels
+     ======================================== */
+
+  /* Fully transparent */
+  --uswds-opacity-0: 0;
+
+  /* Very subtle */
+  --uswds-opacity-10: 0.1;
+
+  /* Subtle */
+  --uswds-opacity-20: 0.2;
+
+  /* Light */
+  --uswds-opacity-30: 0.3;
+
+  /* Medium-light */
+  --uswds-opacity-40: 0.4;
+
+  /* Medium */
+  --uswds-opacity-50: 0.5;
+
+  /* Medium-strong */
+  --uswds-opacity-60: 0.6;
+
+  /* Strong */
+  --uswds-opacity-70: 0.7;
+
+  /* Very strong */
+  --uswds-opacity-80: 0.8;
+
+  /* Near opaque */
+  --uswds-opacity-90: 0.9;
+
+  /* Fully opaque */
+  --uswds-opacity-100: 1;
+
+  /* ========================================
+     COMPONENT-SPECIFIC OPACITY
+     Common use cases
+     ======================================== */
+
+  /* Disabled elements */
+  --uswds-opacity-disabled: 0.5;
+
+  /* Hover state (slight transparency) */
+  --uswds-opacity-hover: 0.9;
+
+  /* Modal/dialog backdrop */
+  --uswds-opacity-overlay: 0.75;
+
+  /* Light overlay (for image overlays) */
+  --uswds-opacity-overlay-light: 0.3;
+
+  /* Dark overlay (for hero sections) */
+  --uswds-opacity-overlay-dark: 0.6;
+
+  /* Skeleton loading placeholder */
+  --uswds-opacity-skeleton: 0.2;
+
+  /* Secondary text */
+  --uswds-opacity-text-secondary: 0.7;
+
+  /* Tertiary/muted text */
+  --uswds-opacity-text-tertiary: 0.5;
+
+  /* Dividers and borders */
+  --uswds-opacity-divider: 0.15;
+
+  /* Focus state overlay */
+  --uswds-opacity-focus: 0.1;
+
+  /* ========================================
+     STATE OPACITY
+     Interaction states
+     ======================================== */
+
+  /* Active/pressed state */
+  --uswds-opacity-active: 0.8;
+
+  /* Loading state */
+  --uswds-opacity-loading: 0.6;
+
+  /* Placeholder text */
+  --uswds-opacity-placeholder: 0.4;
+}

@@ -1,0 +1,98 @@
+/**
+ * USWDS 3.0 Typography Design Tokens
+ * Based on: https://designsystem.digital.gov/design-tokens/typesetting/
+ *
+ * Font families, sizes, weights, and line heights
+ */
+
+:root {
+  /* ========================================
+     FONT FAMILIES
+     ======================================== */
+
+  /* Sans-serif (default for body and UI) */
+  --uswds-font-sans: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
+
+  /* Serif (alternative for content) */
+  --uswds-font-serif: "Merriweather", "Georgia", "Cambria", "Times New Roman", "Times", serif;
+
+  /* Monospace (for code) */
+  --uswds-font-mono: "Roboto Mono", "Bitstream Vera Sans Mono", "Consolas", "Courier", monospace;
+
+  /* System font (native UI) */
+  --uswds-font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+
+  /* ========================================
+     FONT SIZES
+     Type scale based on USWDS standards
+     ======================================== */
+  --uswds-font-size-3xs: 0.81rem;    /* ~13px */
+  --uswds-font-size-2xs: 0.875rem;   /* 14px */
+  --uswds-font-size-xs: 0.9375rem;   /* 15px */
+  --uswds-font-size-sm: 0.9375rem;   /* 15px */
+  --uswds-font-size-md: 1rem;        /* 16px - base */
+  --uswds-font-size-lg: 1.06rem;     /* ~17px */
+  --uswds-font-size-xl: 1.25rem;     /* 20px */
+  --uswds-font-size-2xl: 1.5rem;     /* 24px */
+  --uswds-font-size-3xl: 2rem;       /* 32px */
+
+  /* Heading sizes */
+  --uswds-font-size-h6: 0.9375rem;   /* 15px */
+  --uswds-font-size-h5: 1rem;        /* 16px */
+  --uswds-font-size-h4: 1.25rem;     /* 20px */
+  --uswds-font-size-h3: 1.5rem;      /* 24px */
+  --uswds-font-size-h2: 2rem;        /* 32px */
+  --uswds-font-size-h1: 2.5rem;      /* 40px */
+
+  /* Display sizes (for heroes, large headings) */
+  --uswds-font-size-display-sm: 2.5rem;   /* 40px */
+  --uswds-font-size-display-md: 3rem;     /* 48px */
+  --uswds-font-size-display-lg: 3.5rem;   /* 56px */
+  --uswds-font-size-display-xl: 4rem;     /* 64px */
+
+  /* ========================================
+     FONT WEIGHTS
+     ======================================== */
+  --uswds-font-weight-light: 300;
+  --uswds-font-weight-normal: 400;
+  --uswds-font-weight-medium: 500;
+  --uswds-font-weight-semibold: 600;
+  --uswds-font-weight-bold: 700;
+  --uswds-font-weight-heavy: 900;
+
+  /* ========================================
+     LINE HEIGHTS
+     For optimal readability
+     ======================================== */
+  --uswds-line-height-1: 1;
+  --uswds-line-height-2: 1.15;
+  --uswds-line-height-3: 1.35;
+  --uswds-line-height-4: 1.5;
+  --uswds-line-height-5: 1.62;
+  --uswds-line-height-6: 1.75;
+
+  /* Heading line heights */
+  --uswds-line-height-heading: 1.2;
+
+  /* Body line height */
+  --uswds-line-height-body: 1.5;
+
+  /* ========================================
+     LETTER SPACING
+     ======================================== */
+  --uswds-letter-spacing-tight: -0.02em;
+  --uswds-letter-spacing-normal: 0;
+  --uswds-letter-spacing-wide: 0.025em;
+  --uswds-letter-spacing-wider: 0.05em;
+
+  /* ========================================
+     MEASURE (Line Length)
+     Optimal reading width
+     ======================================== */
+  --uswds-measure-1: 44ex;  /* Narrow */
+  --uswds-measure-2: 60ex;  /* Default */
+  --uswds-measure-3: 64ex;
+  --uswds-measure-4: 68ex;
+  --uswds-measure-5: 72ex;
+  --uswds-measure-6: 88ex;  /* Wide */
+}

@@ -1,0 +1,88 @@
+/**
+ * USWDS 3.0 Spacing Design Tokens
+ * Based on: https://designsystem.digital.gov/design-tokens/spacing-units/
+ *
+ * 8px-based spacing scale for consistent margins, padding, and gaps
+ * All values follow USWDS standard spacing multiples
+ */
+
+:root {
+  /* ========================================
+     BASE SPACING UNITS
+     8px scale (0.5rem = 8px base)
+     ======================================== */
+
+  /* Micro spacing */
+  --uswds-spacing-1px: 1px;
+  --uswds-spacing-2px: 2px;
+
+  /* Standard spacing scale */
+  --uswds-spacing-05: 0.25rem;    /* 4px */
+  --uswds-spacing-1: 0.5rem;      /* 8px */
+  --uswds-spacing-105: 0.75rem;   /* 12px */
+  --uswds-spacing-2: 1rem;        /* 16px */
+  --uswds-spacing-205: 1.25rem;   /* 20px */
+  --uswds-spacing-3: 1.5rem;      /* 24px */
+  --uswds-spacing-4: 2rem;        /* 32px */
+  --uswds-spacing-5: 2.5rem;      /* 40px */
+  --uswds-spacing-6: 3rem;        /* 48px */
+  --uswds-spacing-7: 3.5rem;      /* 56px */
+  --uswds-spacing-8: 4rem;        /* 64px */
+  --uswds-spacing-9: 4.5rem;      /* 72px */
+  --uswds-spacing-10: 5rem;       /* 80px */
+  --uswds-spacing-15: 7.5rem;     /* 120px */
+
+  /* ========================================
+     NAMED SPACING (Component/Layout Sizes)
+     ======================================== */
+
+  /* Component widths */
+  --uswds-spacing-card: 10rem;        /* 160px */
+  --uswds-spacing-card-lg: 15rem;     /* 240px */
+  --uswds-spacing-mobile: 20rem;      /* 320px */
+  --uswds-spacing-mobile-lg: 30rem;   /* 480px */
+  --uswds-spacing-tablet: 40rem;      /* 640px */
+  --uswds-spacing-tablet-lg: 55rem;   /* 880px */
+  --uswds-spacing-desktop: 64rem;     /* 1024px */
+  --uswds-spacing-desktop-lg: 75rem;  /* 1200px */
+  --uswds-spacing-widescreen: 87.5rem; /* 1400px */
+
+  /* ========================================
+     NEGATIVE SPACING
+     For pull/offset layouts
+     ======================================== */
+
+  --uswds-spacing-neg-1px: -1px;
+  --uswds-spacing-neg-2px: -2px;
+  --uswds-spacing-neg-05: -0.25rem;   /* -4px */
+  --uswds-spacing-neg-1: -0.5rem;     /* -8px */
+  --uswds-spacing-neg-105: -0.75rem;  /* -12px */
+  --uswds-spacing-neg-2: -1rem;       /* -16px */
+  --uswds-spacing-neg-205: -1.25rem;  /* -20px */
+  --uswds-spacing-neg-3: -1.5rem;     /* -24px */
+  --uswds-spacing-neg-4: -2rem;       /* -32px */
+  --uswds-spacing-neg-5: -2.5rem;     /* -40px */
+  --uswds-spacing-neg-6: -3rem;       /* -48px */
+  --uswds-spacing-neg-7: -3.5rem;     /* -56px */
+  --uswds-spacing-neg-8: -4rem;       /* -64px */
+  --uswds-spacing-neg-9: -4.5rem;     /* -72px */
+  --uswds-spacing-neg-10: -5rem;      /* -80px */
+  --uswds-spacing-neg-15: -7.5rem;    /* -120px */
+
+  /* ========================================
+     CONTAINER/SECTION SPACING
+     Common use cases
+     ======================================== */
+
+  /* Vertical rhythm */
+  --uswds-spacing-section-xs: 2rem;   /* 32px */
+  --uswds-spacing-section-sm: 3rem;   /* 48px */
+  --uswds-spacing-section-md: 4rem;   /* 64px */
+  --uswds-spacing-section-lg: 5rem;   /* 80px */
+  --uswds-spacing-section-xl: 7.5rem; /* 120px */
+
+  /* Container padding */
+  --uswds-spacing-container-mobile: 1rem;   /* 16px */
+  --uswds-spacing-container-tablet: 2rem;   /* 32px */
+  --uswds-spacing-container-desktop: 4rem;  /* 64px */
+}

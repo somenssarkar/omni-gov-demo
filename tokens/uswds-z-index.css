@@ -1,0 +1,79 @@
+/**
+ * USWDS 3.0 Z-Index Design Tokens
+ * Based on: https://designsystem.digital.gov/design-tokens/z-index/
+ *
+ * Layering system for managing element stacking order
+ * Organized by UI layer hierarchy
+ */
+
+:root {
+  /* ========================================
+     BASE LAYERS
+     Foundation stacking levels
+     ======================================== */
+
+  /* Base content layer */
+  --uswds-z-index-base: 0;
+
+  /* Slightly above base (sticky elements) */
+  --uswds-z-index-100: 100;
+
+  /* Mid-level (dropdowns, popovers) */
+  --uswds-z-index-200: 200;
+
+  /* Upper level (modals, dialogs) */
+  --uswds-z-index-300: 300;
+
+  /* Top level (tooltips, notifications) */
+  --uswds-z-index-400: 400;
+
+  /* Highest level (overlays, loading screens) */
+  --uswds-z-index-500: 500;
+
+  /* ========================================
+     COMPONENT-SPECIFIC Z-INDEX
+     Named values for common UI patterns
+     ======================================== */
+
+  /* Sticky header/navigation */
+  --uswds-z-index-header: 1000;
+  --uswds-z-index-sticky: 1000;
+
+  /* Dropdown menus */
+  --uswds-z-index-dropdown: 2000;
+
+  /* Mobile navigation overlay */
+  --uswds-z-index-nav-mobile: 2500;
+
+  /* Tooltips */
+  --uswds-z-index-tooltip: 3000;
+
+  /* Modals and dialogs */
+  --uswds-z-index-modal: 4000;
+
+  /* Modal backdrop/overlay */
+  --uswds-z-index-overlay: 3999;
+
+  /* Toast notifications */
+  --uswds-z-index-toast: 5000;
+
+  /* Skip navigation link */
+  --uswds-z-index-skip-nav: 6000;
+
+  /* Loading indicators */
+  --uswds-z-index-loading: 9000;
+
+  /* Emergency alerts (highest priority) */
+  --uswds-z-index-alert: 10000;
+
+  /* ========================================
+     NEGATIVE Z-INDEX
+     For elements that should be behind content
+     ======================================== */
+
+  --uswds-z-index-neg-1: -1;
+  --uswds-z-index-neg-100: -100;
+
+  /* Background decorations */
+  --uswds-z-index-background: -1;
+}
