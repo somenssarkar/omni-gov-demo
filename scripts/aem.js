@@ -353,13 +353,44 @@ function createOptimizedPicture(
 
 /**
  * Set template (page structure) and theme (page styles).
+ * Loads site-specific stylesheet from metadata or auto-detects from URL path.
  */
-function decorateTemplateAndTheme() {
+async function decorateTemplateAndTheme() {
   const addClasses = (element, classes) => {
     classes.split(',').forEach((c) => {
       element.classList.add(toClassName(c.trim()));
     });
   };
+
+  // 1. Load site-specific stylesheet from metadata
+  const stylesheet = getMetadata('stylesheet');
+  if (stylesheet) {
+    // Metadata explicitly specifies stylesheet
+    await loadCSS(stylesheet);
+  } else {
+    // Fallback: Auto-detect site from URL path
+    const { pathname } = window.location;
+
+    // Check if we're in a site-specific path
+    // Examples: /sites/constituent-health/... or /sites/service-member-health/...
+    const siteMatch = pathname.match(/^\/sites\/([^/]+)\//);
+
+    if (siteMatch) {
+      const siteName = siteMatch[1];
+      const defaultStylesheet = `/sites/${siteName}/styles/styles.css`;
+
+      // Try to load site-specific stylesheet
+      try {
+        await loadCSS(defaultStylesheet);
+      } catch (error) {
+        // Site-specific stylesheet doesn't exist, continue without it
+        // eslint-disable-next-line no-console
+        console.info(`Site-specific stylesheet not found: ${defaultStylesheet}`);
+      }
+    }
+  }
+
+  // 2. Add template and theme CSS classes (existing behavior)
   const template = getMetadata('template');
   if (template) addClasses(document.body, template);
   const theme = getMetadata('theme');
