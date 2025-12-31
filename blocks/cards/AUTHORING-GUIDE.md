@@ -28,6 +28,12 @@ Cards (Variation)
 
 ## Card Variations
 
+**How EDS Processes Variations:**
+When you type "Cards (Flag)" in the first cell, EDS automatically:
+1. Extracts "flag" as a CSS class
+2. Adds it to the block: `<div class="cards flag block">`
+3. Our JavaScript detects it from the class name
+
 ### 1. Default Card (Text Only)
 
 **First Row:** `Cards` or `Cards (Default)`

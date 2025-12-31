@@ -49,12 +49,23 @@ export default function decorate(block) {
   // Detect variation from block metadata or first row
   const variation = detectVariation(block);
 
+  // Debug logging
+  console.log('🎴 Cards Block Debug:', {
+    variation,
+    rowCount: block.children.length,
+    firstCellText: block.querySelector('div:first-child div:first-child')?.textContent
+  });
+
   const ul = document.createElement('ul');
   ul.className = 'usa-card-group';
 
-  [...block.children].forEach((row) => {
+  [...block.children].forEach((row, index) => {
     const card = createUSWDSCard(row, variation);
-    if (card) ul.append(card);
+    if (card) {
+      ul.append(card);
+    } else {
+      console.log(`  ↳ Row ${index} skipped (likely header row)`);
+    }
   });
 
   block.textContent = '';
@@ -62,28 +73,33 @@ export default function decorate(block) {
 }
 
 /**
- * Detect card variation from first row
+ * Detect card variation from block classes
+ * EDS automatically adds variation as CSS class (e.g., "Cards (Flag)" → class="cards flag")
  * Supports: Default, Inset, Exdent, Flag, Flag Right
  */
 function detectVariation(block) {
-  const firstRow = block.querySelector(':scope > div:first-child');
-  if (!firstRow) return 'default';
+  const classes = Array.from(block.classList);
+  console.log('  ↳ Block classes:', classes);
 
-  const firstCell = firstRow.querySelector(':scope > div:first-child');
-  if (!firstCell) return 'default';
-
-  const text = firstCell.textContent.trim().toLowerCase();
-
-  // Check for variation in parentheses, e.g., "Cards (Flag)"
-  const match = text.match(/cards?\s*\(([^)]+)\)/i);
-  if (match) {
-    const varType = match[1].trim().toLowerCase();
-    if (varType.includes('flag') && varType.includes('right')) return 'flag-right';
-    if (varType.includes('flag')) return 'flag';
-    if (varType.includes('inset')) return 'inset';
-    if (varType.includes('exdent')) return 'exdent';
+  // EDS adds variation name as lowercase class
+  if (classes.includes('flag') && classes.includes('right')) {
+    console.log('  ↳ Detected: flag-right');
+    return 'flag-right';
+  }
+  if (classes.includes('flag')) {
+    console.log('  ↳ Detected: flag');
+    return 'flag';
+  }
+  if (classes.includes('inset')) {
+    console.log('  ↳ Detected: inset');
+    return 'inset';
+  }
+  if (classes.includes('exdent')) {
+    console.log('  ↳ Detected: exdent');
+    return 'exdent';
   }
 
+  console.log('  ↳ No variation detected, using default');
   return 'default';
 }
 
