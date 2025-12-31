@@ -20,6 +20,28 @@
   --card-border: 2px solid #112e51;
 }
 
+/* Direct body styling for immediate visual feedback */
+body[data-site="service-member-health"] {
+  background-color: #f5f5f5;
+  border-top: 4px solid #112e51;
+}
+
+/* Make links navy blue to confirm theme is active */
+body[data-site="service-member-health"] a:any-link {
+  color: #112e51;
+}
+
+body[data-site="service-member-health"] a:hover {
+  color: #1a4480;
+}
+
+/* Headings should be navy */
+body[data-site="service-member-health"] h1,
+body[data-site="service-member-health"] h2,
+body[data-site="service-member-health"] h3 {
+  color: #112e51;
+}
+
 /* Site-specific component overrides */
 .hero {
   background: linear-gradient(90deg, #112e51 0%, #1a4480 100%);
@@ -32,9 +54,4 @@
   border: var(--card-border);
   border-radius: var(--card-border-radius);
   box-shadow: var(--card-shadow);
-}
-
-/* Formal, authoritative aesthetic */
-body {
-  --background-color: #ffffff;
 }

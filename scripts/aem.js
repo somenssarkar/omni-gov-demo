@@ -405,13 +405,20 @@ async function decorateTemplateAndTheme() {
       const defaultStylesheet = `/sites/${siteName}/styles/styles.css`;
       try {
         await loadCSS(defaultStylesheet);
+        // Mark body with site identifier for debugging
+        document.body.dataset.site = siteName;
         // eslint-disable-next-line no-console
-        console.info(`Loaded site-specific stylesheet: ${defaultStylesheet}`);
+        console.log(`✅ Site-specific stylesheet loaded: ${defaultStylesheet}`);
+        // eslint-disable-next-line no-console
+        console.log(`   Detected site: ${siteName} (from hostname: ${hostname})`);
       } catch (error) {
         // Site-specific stylesheet doesn't exist, continue without it
         // eslint-disable-next-line no-console
-        console.info(`Site-specific stylesheet not found: ${defaultStylesheet}`);
+        console.warn(`⚠️  Site-specific stylesheet not found: ${defaultStylesheet}`);
       }
+    } else {
+      // eslint-disable-next-line no-console
+      console.log(`ℹ️  No site-specific stylesheet detected (hostname: ${hostname}, path: ${pathname})`);
     }
   }
 

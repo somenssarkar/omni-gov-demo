@@ -19,6 +19,28 @@
   --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Direct body styling for immediate visual feedback */
+body[data-site="constituent-health"] {
+  background-color: #f0f7fc;
+  border-top: 4px solid #0071bc;
+}
+
+/* Make links light blue to confirm theme is active */
+body[data-site="constituent-health"] a:any-link {
+  color: #0071bc;
+}
+
+body[data-site="constituent-health"] a:hover {
+  color: #205493;
+}
+
+/* Headings should be light blue */
+body[data-site="constituent-health"] h1,
+body[data-site="constituent-health"] h2,
+body[data-site="constituent-health"] h3 {
+  color: #0071bc;
+}
+
 /* Site-specific component overrides */
 .hero {
   background: linear-gradient(135deg, #0071bc 0%, #02bfe7 100%);
@@ -29,9 +51,4 @@
 .card {
   border-radius: var(--card-border-radius);
   box-shadow: var(--card-shadow);
-}
-
-/* Modern, approachable aesthetic */
-body {
-  --background-color: #f8f9fa;
 }
