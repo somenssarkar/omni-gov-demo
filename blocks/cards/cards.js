@@ -1,92 +1,123 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
 /**
- * Cards Block - USWDS Enhanced
+ * Cards Block - USWDS Enhanced with Full Variation Support
  * Transforms EDS block structure into official USWDS card HTML
  *
  * EDS Authoring Structure (Google Docs):
- * Each row becomes a card with:
- * - First cell: Heading (or heading + body text)
- * - Second cell: Body text, image, or action link
- * - Third cell: Action link or additional content
+ * ┌─────────────────────────────────────────────────────────────────┐
+ * │ Cards (Variation)  │           │              │          │       │
+ * ├────────────────────┼───────────┼──────────────┼──────────┤       │
+ * │ Heading            │ Image     │ Body Text    │ Link     │       │
+ * ├────────────────────┼───────────┼──────────────┼──────────┤       │
+ * │ Health Services    │ (image)   │ Learn about..│/services │       │
+ * └────────────────────┴───────────┴──────────────┴──────────┘       │
+ *
+ * 4-Column Structure:
+ * - Column 1: Heading (required) - Card title
+ * - Column 2: Image (optional) - Card image/photo
+ * - Column 3: Body Text (optional) - Card description
+ * - Column 4: Link (optional) - Button link (plain text URL or hyperlink)
+ *
+ * Supported Variations (in first row):
+ * - "Cards" or "Cards (Default)" - Standard vertical card
+ * - "Cards (Inset)" - Image with padding inside card
+ * - "Cards (Exdent)" - Image extends to card edges
+ * - "Cards (Flag)" - Horizontal layout, image on left
+ * - "Cards (Flag Right)" - Horizontal layout, image on right
+ *
+ * Examples:
+ *
+ * 1. Default Card (text only):
+ *    Cards
+ *    | Health Services | | Learn about our services | /services |
+ *
+ * 2. Card with Image:
+ *    Cards
+ *    | Health Services | (image) | Learn about our services | /services |
+ *
+ * 3. Inset Media Variation:
+ *    Cards (Inset)
+ *    | Health Services | (image) | Learn about our services | /services |
+ *
+ * 4. Flag Layout (horizontal):
+ *    Cards (Flag)
+ *    | Health Services | (image) | Learn about our services | /services |
  */
 
 export default function decorate(block) {
+  // Detect variation from block metadata or first row
+  const variation = detectVariation(block);
+
   const ul = document.createElement('ul');
   ul.className = 'usa-card-group';
 
   [...block.children].forEach((row) => {
-    const card = createUSWDSCard(row);
-    ul.append(card);
+    const card = createUSWDSCard(row, variation);
+    if (card) ul.append(card);
   });
 
   block.textContent = '';
   block.append(ul);
 }
 
-function createUSWDSCard(row) {
+/**
+ * Detect card variation from first row
+ * Supports: Default, Inset, Exdent, Flag, Flag Right
+ */
+function detectVariation(block) {
+  const firstRow = block.querySelector(':scope > div:first-child');
+  if (!firstRow) return 'default';
+
+  const firstCell = firstRow.querySelector(':scope > div:first-child');
+  if (!firstCell) return 'default';
+
+  const text = firstCell.textContent.trim().toLowerCase();
+
+  // Check for variation in parentheses, e.g., "Cards (Flag)"
+  const match = text.match(/cards?\s*\(([^)]+)\)/i);
+  if (match) {
+    const varType = match[1].trim().toLowerCase();
+    if (varType.includes('flag') && varType.includes('right')) return 'flag-right';
+    if (varType.includes('flag')) return 'flag';
+    if (varType.includes('inset')) return 'inset';
+    if (varType.includes('exdent')) return 'exdent';
+  }
+
+  return 'default';
+}
+
+/**
+ * Create a USWDS card from a table row
+ * Supports 4-column structure: Heading | Image | Body | Link
+ */
+function createUSWDSCard(row, variation) {
   const cells = [...row.children];
+
+  // Skip if this is the header row (contains "Cards" text)
+  if (cells[0] && cells[0].textContent.trim().toLowerCase().startsWith('card')) {
+    return null;
+  }
+
   const li = document.createElement('li');
   li.className = 'usa-card tablet-lg:grid-col-6 widescreen:grid-col-4';
+
+  // Apply variation class to card
+  if (variation === 'flag' || variation === 'flag-right') {
+    li.classList.add('usa-card--flag');
+    if (variation === 'flag-right') {
+      li.classList.add('usa-card--media-right');
+    }
+  }
 
   const container = document.createElement('div');
   container.className = 'usa-card__container';
 
-  let heading = '';
-  let bodyContent = '';
-  let imageSrc = null;
-  let actionLink = null;
-
-  // Parse first cell (heading + optional body)
-  if (cells[0]) {
-    const firstCell = cells[0];
-    const headingEl = firstCell.querySelector('h1, h2, h3, h4, h5, h6');
-
-    if (headingEl) {
-      heading = headingEl.textContent.trim();
-      // Get remaining content as body
-      const clone = firstCell.cloneNode(true);
-      clone.querySelector('h1, h2, h3, h4, h5, h6')?.remove();
-      bodyContent = clone.innerHTML.trim();
-    } else {
-      // No heading element, use first line as heading
-      const lines = firstCell.innerHTML.split('<br>');
-      if (lines.length > 1) {
-        heading = lines[0].replace(/<[^>]*>/g, '').trim();
-        bodyContent = lines.slice(1).join(' ').trim();
-      } else {
-        heading = firstCell.textContent.trim();
-      }
-    }
-  }
-
-  // Parse second cell (image, link, or body)
-  if (cells[1]) {
-    const imgEl = cells[1].querySelector('img');
-    const linkEl = cells[1].querySelector('a');
-
-    if (imgEl) {
-      imageSrc = imgEl.src;
-    } else if (linkEl) {
-      actionLink = {
-        href: linkEl.href,
-        text: linkEl.textContent.trim()
-      };
-    } else if (!bodyContent) {
-      bodyContent = cells[1].innerHTML.trim();
-    }
-  }
-
-  // Parse third cell (usually action link)
-  if (cells[2] && !actionLink) {
-    const linkEl = cells[2].querySelector('a');
-    if (linkEl) {
-      actionLink = {
-        href: linkEl.href,
-        text: linkEl.textContent.trim()
-      };
-    }
-  }
+  // Parse 4-column structure
+  const heading = parseHeading(cells[0]);
+  const imageSrc = parseImage(cells[1]);
+  const bodyContent = parseBody(cells[2]);
+  const actionLink = parseLink(cells[3]);
 
   // Build USWDS card structure
 
@@ -105,6 +136,14 @@ function createUSWDSCard(row) {
   if (imageSrc) {
     const media = document.createElement('div');
     media.className = 'usa-card__media';
+
+    // Apply variation-specific classes
+    if (variation === 'inset') {
+      media.classList.add('usa-card__media--inset');
+    } else if (variation === 'exdent') {
+      media.classList.add('usa-card__media--exdent');
+    }
+
     const imgWrapper = document.createElement('div');
     imgWrapper.className = 'usa-card__img';
 
@@ -136,4 +175,65 @@ function createUSWDSCard(row) {
 
   li.append(container);
   return li;
+}
+
+/**
+ * Parse heading from first column
+ */
+function parseHeading(cell) {
+  if (!cell) return '';
+
+  const headingEl = cell.querySelector('h1, h2, h3, h4, h5, h6');
+  if (headingEl) {
+    return headingEl.textContent.trim();
+  }
+
+  return cell.textContent.trim();
+}
+
+/**
+ * Parse image from second column
+ */
+function parseImage(cell) {
+  if (!cell) return null;
+
+  const imgEl = cell.querySelector('img');
+  return imgEl ? imgEl.src : null;
+}
+
+/**
+ * Parse body text from third column
+ */
+function parseBody(cell) {
+  if (!cell) return '';
+
+  const content = cell.innerHTML.trim();
+  return content;
+}
+
+/**
+ * Parse link from fourth column
+ * Supports both hyperlinks (<a> tags) and plain text URLs
+ */
+function parseLink(cell) {
+  if (!cell) return null;
+
+  const linkEl = cell.querySelector('a');
+  if (linkEl) {
+    return {
+      href: linkEl.href,
+      text: linkEl.textContent.trim()
+    };
+  }
+
+  // Handle plain text URLs
+  const cellText = cell.textContent.trim();
+  if (cellText) {
+    return {
+      href: cellText,
+      text: 'Learn More' // Default button text
+    };
+  }
+
+  return null;
 }
