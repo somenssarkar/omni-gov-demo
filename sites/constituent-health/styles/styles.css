@@ -34,9 +34,14 @@ body[data-site="constituent-health"] a:hover {
   color: #205493;
 }
 
-/* Buttons have white text */
-body[data-site="constituent-health"] .usa-button {
-  color: white;
+/* Buttons have white text (must come after link rules to override) */
+body[data-site="constituent-health"] a.usa-button:any-link {
+  color: black;
+}
+
+body[data-site="constituent-health"] a.usa-button:hover {
+  color: black;
+  text-decoration: none;
 }
 
 /* Headings should be light blue */

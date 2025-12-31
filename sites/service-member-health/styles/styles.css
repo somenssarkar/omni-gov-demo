@@ -35,9 +35,14 @@ body[data-site="service-member-health"] a:hover {
   color: #1a4480;
 }
 
-/* Buttons have white text */
-body[data-site="service-member-health"] .usa-button {
+/* Buttons have black text for visual differentiation from constituent-health */
+body[data-site="service-member-health"] a.usa-button:any-link {
   color: white;
+}
+
+body[data-site="service-member-health"] a.usa-button:hover {
+  color: white;
+  text-decoration: none;
 }
 
 /* Headings should be navy */
