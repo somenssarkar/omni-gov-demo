@@ -1,9 +1,10 @@
 // USWDS Cards Component
 // Official USWDS card styling for EDS cards block
 
-// Import USWDS card component styles directly
-// This imports all the official USWDS card CSS classes
+// Import USWDS component styles directly
+// This imports all the official USWDS CSS classes
 @forward "usa-card";
+@forward "usa-button";  // Required for card footer buttons
 
 // Site-specific customizations
 // These styles cascade with site themes (constituent-health / service-member-health)
