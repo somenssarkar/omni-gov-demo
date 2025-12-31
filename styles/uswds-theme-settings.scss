@@ -1,0 +1,34 @@
+// USWDS Theme Settings
+// Global configuration that all components will import
+// This file defines default theme settings that site-specific styles can override
+
+// Import USWDS core with theme configuration
+@use "uswds-core" as * with (
+  // === Asset Paths ===
+  $theme-image-path: "../icons",
+  $theme-font-path: "../fonts",
+
+  // === Color Theme (Base - Sites Override via CSS Variables) ===
+  $theme-color-primary-family: "blue",
+  $theme-color-primary-vivid: false,
+  $theme-color-secondary-family: "red",
+  $theme-color-accent-cool-family: "cyan",
+
+  // === Typography ===
+  $theme-font-sans-custom-stack: '"Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+  $theme-font-serif-custom-stack: '"Merriweather", Georgia, serif',
+  $theme-font-mono-custom-stack: '"Roboto Mono", "Courier New", monospace',
+
+  // === Component Styling ===
+  $theme-button-border-radius: "md",
+  $theme-card-border-radius: "lg",
+  $theme-card-border-width: 2px,
+  $theme-card-gap: "2",
+
+  // === Spacing ===
+  $theme-site-margins-width: "desktop",
+  $theme-site-max-width: "desktop-lg"
+);
+
+// Make USWDS functions and mixins available to components
+@forward "uswds-core";

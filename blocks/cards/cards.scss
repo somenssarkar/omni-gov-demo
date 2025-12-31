@@ -1,0 +1,35 @@
+// USWDS Cards Component
+// Official USWDS card styling for EDS cards block
+
+// Import USWDS card component styles directly
+// This imports all the official USWDS card CSS classes
+@forward "usa-card";
+
+// Site-specific customizations
+// These styles cascade with site themes (constituent-health / service-member-health)
+
+.cards {
+  // Add subtle hover effect for better interactivity
+  .usa-card {
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  // Ensure card headings use site theme colors
+  .usa-card__heading {
+    color: var(--uswds-color-primary);
+  }
+
+  // Footer buttons should use site theme
+  .usa-card__footer .usa-button {
+    background-color: var(--uswds-color-primary);
+
+    &:hover {
+      background-color: var(--uswds-color-primary-dark);
+    }
+  }
+}

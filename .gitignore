@@ -7,3 +7,15 @@ helix-importer-ui
 .DS_Store
 *.bak
 .idea
+
+# Sass build artifacts
+*.css.map
+.sass-cache/
+
+# IDE
+.vscode/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
