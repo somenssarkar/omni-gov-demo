@@ -368,20 +368,45 @@ async function decorateTemplateAndTheme() {
     // Metadata explicitly specifies stylesheet
     await loadCSS(stylesheet);
   } else {
-    // Fallback: Auto-detect site from URL path
-    const { pathname } = window.location;
+    // Fallback: Auto-detect site from hostname or URL path
+    const { hostname, pathname } = window.location;
+    let siteName = null;
 
-    // Check if we're in a site-specific path
-    // Examples: /sites/constituent-health/... or /sites/service-member-health/...
-    const siteMatch = pathname.match(/^\/sites\/([^/]+)\//);
+    // Multi-site detection: Check hostname for site identifier
+    // EDS multi-site pattern: main--SITE-NAME--owner.aem.page
+    // Examples:
+    // - main--service-member-health--somenssarkar.aem.page → service-member-health
+    // - main--omni-gov-demo--somenssarkar.aem.page → constituent-health (default)
+    const hostnameMatch = hostname.match(/--([^-]+(?:-[^-]+)*)--/);
+    if (hostnameMatch) {
+      const repoOrSiteName = hostnameMatch[1];
+      // Map repo name to site-specific styles
+      if (repoOrSiteName === 'service-member-health') {
+        siteName = 'service-member-health';
+      } else if (repoOrSiteName === 'constituent-health') {
+        siteName = 'constituent-health';
+      } else if (repoOrSiteName === 'omni-gov-demo') {
+        // Main repo defaults to constituent-health
+        siteName = 'constituent-health';
+      }
+    }
 
-    if (siteMatch) {
-      const siteName = siteMatch[1];
+    // Path-based detection: Check if we're in a /sites/ subfolder
+    // This handles cases where sites are accessed via paths instead of separate domains
+    if (!siteName) {
+      const pathMatch = pathname.match(/^\/sites\/([^/]+)\//);
+      if (pathMatch) {
+        siteName = pathMatch[1];
+      }
+    }
+
+    // Load site-specific stylesheet if detected
+    if (siteName) {
       const defaultStylesheet = `/sites/${siteName}/styles/styles.css`;
-
-      // Try to load site-specific stylesheet
       try {
         await loadCSS(defaultStylesheet);
+        // eslint-disable-next-line no-console
+        console.info(`Loaded site-specific stylesheet: ${defaultStylesheet}`);
       } catch (error) {
         // Site-specific stylesheet doesn't exist, continue without it
         // eslint-disable-next-line no-console
