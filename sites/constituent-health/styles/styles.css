@@ -25,13 +25,18 @@ body[data-site="constituent-health"] {
   border-top: 4px solid #0071bc;
 }
 
-/* Make links light blue to confirm theme is active */
+/* Links are light blue */
 body[data-site="constituent-health"] a:any-link {
   color: #0071bc;
 }
 
 body[data-site="constituent-health"] a:hover {
   color: #205493;
+}
+
+/* Buttons have white text */
+body[data-site="constituent-health"] .usa-button {
+  color: white;
 }
 
 /* Headings should be light blue */
