@@ -9,7 +9,10 @@
     "lint": "npm run lint:js && npm run lint:css",
     "lint:fix": "npm run lint:js -- --fix && npm run lint:css -- --fix",
     "build:cards": "sass --load-path=node_modules/@uswds/uswds/packages --style=expanded blocks/cards/cards.scss:blocks/cards/cards.css",
-    "watch:cards": "sass --load-path=node_modules/@uswds/uswds/packages --watch blocks/cards/cards.scss:blocks/cards/cards.css"
+    "watch:cards": "sass --load-path=node_modules/@uswds/uswds/packages --watch blocks/cards/cards.scss:blocks/cards/cards.css",
+    "build:hero": "sass --load-path=node_modules/@uswds/uswds/packages --style=expanded blocks/hero/hero.scss:blocks/hero/hero.css",
+    "watch:hero": "sass --load-path=node_modules/@uswds/uswds/packages --watch blocks/hero/hero.scss:blocks/hero/hero.css",
+    "build:all": "npm run build:cards && npm run build:hero"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,40 @@
+// USWDS Hero Component
+// Official USWDS hero styling for EDS hero block
+
+// Import USWDS component styles directly
+@forward "usa-hero";
+@forward "usa-button";  // Required for hero CTA buttons
+
+// Site-specific customizations
+// These styles cascade with site themes (constituent-health / service-member-health)
+
+.hero {
+  // Ensure hero section takes full width
+  .usa-hero {
+    // Site themes will provide background images via CSS variables or direct styling
+    // Default: use USWDS theme-hero-image variable
+  }
+
+  // Callout box customization
+  .usa-hero__callout {
+    background-color: var(--uswds-color-primary-darker, rgba(0, 0, 0, 0.7));
+  }
+
+  // Heading colors use site theme
+  .usa-hero__heading {
+    color: var(--uswds-color-accent-cool, #00bde3);
+  }
+
+  .usa-hero__heading--alt {
+    color: white;
+  }
+
+  // CTA button should use site theme
+  .usa-hero__callout .usa-button {
+    background-color: var(--uswds-color-primary);
+
+    &:hover {
+      background-color: var(--uswds-color-primary-dark);
+    }
+  }
+}
