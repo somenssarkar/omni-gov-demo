@@ -1,166 +1,276 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
-// media query match that indicates mobile/tablet width
-const isDesktop = window.matchMedia('(min-width: 900px)');
+/**
+ * USWDS Extended Header Block
+ * Creates official USWDS header structure from EDS fragment
+ *
+ * EDS Authoring Structure (Google Docs /header):
+ * ┌──────────────────────────────────────────────┐
+ * │ # Header                                     │
+ * │                                              │
+ * │ ## Brand                                     │
+ * │ [Site Name](/)                               │
+ * │                                              │
+ * │ ## Sections                                  │
+ * │ - [Home](/)                                  │
+ * │ - [Services](/services)                      │
+ * │   - [Primary Care](/services/primary)        │
+ * │   - [Specialists](/services/specialists)     │
+ * │ - [About](/about)                            │
+ * │                                              │
+ * │ ## Tools                                     │
+ * │ - [Search](/search)                          │
+ * │ - [Login](/login)                            │
+ * └──────────────────────────────────────────────┘
+ *
+ * USWDS Output Structure:
+ * - usa-overlay (mobile menu backdrop)
+ * - usa-header usa-header--extended
+ *   - usa-navbar (logo + menu button)
+ *   - usa-nav
+ *     - usa-nav__inner
+ *       - usa-nav__close button
+ *       - usa-nav__primary (main navigation)
+ *       - usa-nav__secondary (tools/utility links)
+ *
+ * Reference: https://designsystem.digital.gov/components/header/
+ */
 
-function closeOnEscape(e) {
-  if (e.code === 'Escape') {
-    const nav = document.getElementById('nav');
-    const navSections = nav.querySelector('.nav-sections');
-    const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
-    if (navSectionExpanded && isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleAllNavSections(navSections);
-      navSectionExpanded.focus();
-    } else if (!isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleMenu(nav, navSections);
-      nav.querySelector('button').focus();
-    }
+// Media query for desktop/mobile breakpoint
+const isDesktop = window.matchMedia('(min-width: 64em)'); // USWDS desktop breakpoint
+
+/**
+ * Toggle mobile navigation menu
+ */
+function toggleMobileNav(header, nav) {
+  const menuBtn = header.querySelector('.usa-menu-btn');
+  const closeBtn = nav.querySelector('.usa-nav__close');
+  const overlay = header.parentElement.querySelector('.usa-overlay');
+
+  const isOpen = nav.classList.contains('is-visible');
+
+  if (isOpen) {
+    // Close menu
+    nav.classList.remove('is-visible');
+    overlay.classList.remove('is-visible');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  } else {
+    // Open menu
+    nav.classList.add('is-visible');
+    overlay.classList.add('is-visible');
+    menuBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
   }
-}
-
-function closeOnFocusLost(e) {
-  const nav = e.currentTarget;
-  if (!nav.contains(e.relatedTarget)) {
-    const navSections = nav.querySelector('.nav-sections');
-    const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
-    if (navSectionExpanded && isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleAllNavSections(navSections, false);
-    } else if (!isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleMenu(nav, navSections, false);
-    }
-  }
-}
-
-function openOnKeydown(e) {
-  const focused = document.activeElement;
-  const isNavDrop = focused.className === 'nav-drop';
-  if (isNavDrop && (e.code === 'Enter' || e.code === 'Space')) {
-    const dropExpanded = focused.getAttribute('aria-expanded') === 'true';
-    // eslint-disable-next-line no-use-before-define
-    toggleAllNavSections(focused.closest('.nav-sections'));
-    focused.setAttribute('aria-expanded', dropExpanded ? 'false' : 'true');
-  }
-}
-
-function focusNavSection() {
-  document.activeElement.addEventListener('keydown', openOnKeydown);
 }
 
 /**
- * Toggles all nav sections
- * @param {Element} sections The container element
- * @param {Boolean} expanded Whether the element should be expanded or collapsed
+ * Toggle accordion submenu
  */
-function toggleAllNavSections(sections, expanded = false) {
-  sections.querySelectorAll('.nav-sections .default-content-wrapper > ul > li').forEach((section) => {
-    section.setAttribute('aria-expanded', expanded);
-  });
-}
+function toggleSubmenu(button) {
+  const isExpanded = button.getAttribute('aria-expanded') === 'true';
+  const submenuId = button.getAttribute('aria-controls');
+  const submenu = document.getElementById(submenuId);
 
-/**
- * Toggles the entire nav
- * @param {Element} nav The container element
- * @param {Element} navSections The nav sections within the container element
- * @param {*} forceExpanded Optional param to force nav expand behavior when not null
- */
-function toggleMenu(nav, navSections, forceExpanded = null) {
-  const expanded = forceExpanded !== null ? !forceExpanded : nav.getAttribute('aria-expanded') === 'true';
-  const button = nav.querySelector('.nav-hamburger button');
-  document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
-  nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-  toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
-  button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
-  // enable nav dropdown keyboard accessibility
-  const navDrops = navSections.querySelectorAll('.nav-drop');
-  if (isDesktop.matches) {
-    navDrops.forEach((drop) => {
-      if (!drop.hasAttribute('tabindex')) {
-        drop.setAttribute('tabindex', 0);
-        drop.addEventListener('focus', focusNavSection);
+  // Close all other submenus
+  const allButtons = button.closest('.usa-nav__primary').querySelectorAll('.usa-accordion__button');
+  allButtons.forEach((btn) => {
+    if (btn !== button) {
+      btn.setAttribute('aria-expanded', 'false');
+      const id = btn.getAttribute('aria-controls');
+      if (id) {
+        const menu = document.getElementById(id);
+        if (menu) menu.hidden = true;
       }
-    });
-  } else {
-    navDrops.forEach((drop) => {
-      drop.removeAttribute('tabindex');
-      drop.removeEventListener('focus', focusNavSection);
-    });
-  }
+    }
+  });
 
-  // enable menu collapse on escape keypress
-  if (!expanded || isDesktop.matches) {
-    // collapse menu on escape press
-    window.addEventListener('keydown', closeOnEscape);
-    // collapse menu on focus lost
-    nav.addEventListener('focusout', closeOnFocusLost);
-  } else {
-    window.removeEventListener('keydown', closeOnEscape);
-    nav.removeEventListener('focusout', closeOnFocusLost);
+  // Toggle this submenu
+  button.setAttribute('aria-expanded', !isExpanded);
+  if (submenu) {
+    submenu.hidden = isExpanded;
   }
 }
 
 /**
- * loads and decorates the header, mainly the nav
- * @param {Element} block The header block element
+ * Build USWDS header from fragment
  */
 export default async function decorate(block) {
-  // load nav as fragment
-  const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
-  const fragment = await loadFragment(navPath);
+  // Load header content from fragment
+  const headerMeta = getMetadata('header');
+  const headerPath = headerMeta ? new URL(headerMeta, window.location).pathname : '/header';
+  const fragment = await loadFragment(headerPath);
 
-  // decorate nav DOM
-  block.textContent = '';
-  const nav = document.createElement('nav');
-  nav.id = 'nav';
-  while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
+  // Parse fragment sections (Brand, Sections, Tools)
+  const sections = [...fragment.children];
+  const brandSection = sections[0];
+  const navSection = sections[1];
+  const toolsSection = sections[2];
 
-  const classes = ['brand', 'sections', 'tools'];
-  classes.forEach((c, i) => {
-    const section = nav.children[i];
-    if (section) section.classList.add(`nav-${c}`);
-  });
+  // Create overlay for mobile menu
+  const overlay = document.createElement('div');
+  overlay.className = 'usa-overlay';
 
-  const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand.querySelector('.button');
-  if (brandLink) {
-    brandLink.className = '';
-    brandLink.closest('.button-container').className = '';
+  // Create header wrapper
+  const header = document.createElement('header');
+  header.className = 'usa-header usa-header--extended';
+
+  // Create navbar (logo + menu button)
+  const navbar = document.createElement('div');
+  navbar.className = 'usa-navbar';
+
+  // Logo
+  const logo = document.createElement('div');
+  logo.className = 'usa-logo';
+  const logoText = document.createElement('em');
+  logoText.className = 'usa-logo__text';
+
+  if (brandSection) {
+    const brandLink = brandSection.querySelector('a');
+    if (brandLink) {
+      logoText.appendChild(brandLink);
+    }
   }
 
-  const navSections = nav.querySelector('.nav-sections');
-  if (navSections) {
-    navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
-      if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-      navSection.addEventListener('click', () => {
-        if (isDesktop.matches) {
-          const expanded = navSection.getAttribute('aria-expanded') === 'true';
-          toggleAllNavSections(navSections);
-          navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+  logo.appendChild(logoText);
+
+  // Menu button
+  const menuBtn = document.createElement('button');
+  menuBtn.className = 'usa-menu-btn';
+  menuBtn.setAttribute('type', 'button');
+  menuBtn.setAttribute('aria-expanded', 'false');
+  menuBtn.setAttribute('aria-controls', 'basic-nav-section');
+  menuBtn.textContent = 'Menu';
+
+  navbar.appendChild(logo);
+  navbar.appendChild(menuBtn);
+
+  // Create nav element
+  const nav = document.createElement('nav');
+  nav.className = 'usa-nav';
+  nav.id = 'basic-nav-section';
+  nav.setAttribute('aria-label', 'Primary navigation');
+
+  // Create nav inner container
+  const navInner = document.createElement('div');
+  navInner.className = 'usa-nav__inner';
+
+  // Close button for mobile
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'usa-nav__close';
+  closeBtn.setAttribute('type', 'button');
+  closeBtn.innerHTML = '<img src="/icons/usa-icons/close.svg" role="img" alt="Close" />';
+
+  navInner.appendChild(closeBtn);
+
+  // Primary navigation
+  if (navSection) {
+    const navList = navSection.querySelector('ul');
+    if (navList) {
+      navList.className = 'usa-nav__primary usa-accordion';
+
+      const navItems = navList.querySelectorAll(':scope > li');
+      navItems.forEach((item, index) => {
+        item.className = 'usa-nav__primary-item';
+
+        const link = item.querySelector(':scope > a');
+        const submenu = item.querySelector(':scope > ul');
+
+        if (submenu) {
+          // Has submenu - convert link to accordion button
+          const button = document.createElement('button');
+          button.className = 'usa-accordion__button usa-nav__link';
+          button.setAttribute('type', 'button');
+          button.setAttribute('aria-expanded', 'false');
+          button.setAttribute('aria-controls', `extended-nav-section-${index}`);
+
+          const span = document.createElement('span');
+          span.textContent = link.textContent;
+          button.appendChild(span);
+
+          // Replace link with button
+          link.replaceWith(button);
+
+          // Style submenu
+          submenu.className = 'usa-nav__submenu';
+          submenu.id = `extended-nav-section-${index}`;
+          submenu.hidden = true;
+
+          submenu.querySelectorAll('li').forEach((subItem) => {
+            subItem.className = 'usa-nav__submenu-item';
+          });
+
+          // Add click handler for accordion
+          button.addEventListener('click', () => toggleSubmenu(button));
+        } else if (link) {
+          // No submenu - style as regular link
+          link.className = 'usa-nav__link';
+          const span = document.createElement('span');
+          span.textContent = link.textContent;
+          link.textContent = '';
+          link.appendChild(span);
         }
       });
-    });
+
+      navInner.appendChild(navList);
+    }
   }
 
-  // hamburger for mobile
-  const hamburger = document.createElement('div');
-  hamburger.classList.add('nav-hamburger');
-  hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
-      <span class="nav-hamburger-icon"></span>
-    </button>`;
-  hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
-  nav.prepend(hamburger);
-  nav.setAttribute('aria-expanded', 'false');
-  // prevent mobile nav behavior on window resize
-  toggleMenu(nav, navSections, isDesktop.matches);
-  isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
+  // Secondary navigation (tools)
+  if (toolsSection) {
+    const secondary = document.createElement('div');
+    secondary.className = 'usa-nav__secondary';
 
-  const navWrapper = document.createElement('div');
-  navWrapper.className = 'nav-wrapper';
-  navWrapper.append(nav);
-  block.append(navWrapper);
+    const secondaryLinks = document.createElement('ul');
+    secondaryLinks.className = 'usa-nav__secondary-links';
+
+    const toolsList = toolsSection.querySelector('ul');
+    if (toolsList) {
+      const toolItems = toolsList.querySelectorAll('li');
+      toolItems.forEach((item) => {
+        const li = document.createElement('li');
+        li.className = 'usa-nav__secondary-item';
+        const link = item.querySelector('a');
+        if (link) {
+          li.appendChild(link);
+        }
+        secondaryLinks.appendChild(li);
+      });
+    }
+
+    secondary.appendChild(secondaryLinks);
+    navInner.appendChild(secondary);
+  }
+
+  nav.appendChild(navInner);
+
+  // Assemble header
+  header.appendChild(navbar);
+  header.appendChild(nav);
+
+  // Add event listeners
+  menuBtn.addEventListener('click', () => toggleMobileNav(header, nav));
+  closeBtn.addEventListener('click', () => toggleMobileNav(header, nav));
+  overlay.addEventListener('click', () => toggleMobileNav(header, nav));
+
+  // Close menu on escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && nav.classList.contains('is-visible')) {
+      toggleMobileNav(header, nav);
+    }
+  });
+
+  // Handle window resize
+  isDesktop.addEventListener('change', () => {
+    if (isDesktop.matches && nav.classList.contains('is-visible')) {
+      toggleMobileNav(header, nav);
+    }
+  });
+
+  // Clear block and append USWDS structure
+  block.textContent = '';
+  block.appendChild(overlay);
+  block.appendChild(header);
 }

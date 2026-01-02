@@ -1,0 +1,44 @@
+// USWDS Header Component
+// Official USWDS header styling for EDS header block
+
+// Import USWDS header component styles directly
+// This imports all the official USWDS CSS classes including:
+// - usa-header, usa-nav, usa-accordion, usa-button, usa-search, usa-skipnav
+@forward "usa-header";
+
+// Site-specific customizations
+// These styles cascade with site themes (constituent-health / service-member-health)
+
+header {
+  // Ensure header stays at top on scroll
+  .usa-header {
+    position: sticky;
+    top: 0;
+    z-index: 300;
+  }
+
+  // Brand/logo area customization
+  .usa-logo__text a {
+    color: var(--uswds-color-primary, #005ea2);
+
+    &:hover {
+      color: var(--uswds-color-primary-dark, #1a4480);
+    }
+  }
+
+  // Primary navigation links use theme colors
+  .usa-nav__link {
+    &:hover {
+      color: var(--uswds-color-primary, #005ea2);
+    }
+  }
+
+  // Secondary navigation (tools) styling
+  .usa-nav__secondary-links a {
+    color: var(--uswds-color-primary, #005ea2);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
