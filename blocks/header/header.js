@@ -103,11 +103,36 @@ export default async function decorate(block) {
   const headerPath = headerMeta ? new URL(headerMeta, window.location).pathname : '/header';
   const fragment = await loadFragment(headerPath);
 
-  // Parse fragment sections (Brand, Sections, Tools)
-  const sections = [...fragment.children];
+  if (!fragment) {
+    console.error('Header: Failed to load fragment from', headerPath);
+    return;
+  }
+
+  // Debug: log fragment structure
+  console.log('Header: Fragment loaded', fragment);
+  console.log('Header: Fragment HTML', fragment.innerHTML.substring(0, 500));
+
+  // Parse fragment sections - fragment is a <main> element with .section children
+  // Each section contains a .default-content-wrapper with the actual content
+  const sections = fragment.querySelectorAll('.section > div');
+
+  console.log('Header: Found', sections.length, 'sections');
+
+  if (sections.length < 2) {
+    console.error('Header: Expected at least 2 sections (Brand, Sections), found', sections.length);
+    // Try alternative: direct children
+    const altSections = [...fragment.children];
+    console.log('Header: Trying alternate - direct children:', altSections.length);
+    return;
+  }
+
   const brandSection = sections[0];
   const navSection = sections[1];
-  const toolsSection = sections[2];
+  const toolsSection = sections[2]; // Optional
+
+  console.log('Header: Brand section', brandSection);
+  console.log('Header: Nav section', navSection);
+  console.log('Header: Tools section', toolsSection);
 
   // Create overlay for mobile menu
   const overlay = document.createElement('div');
@@ -130,8 +155,15 @@ export default async function decorate(block) {
   if (brandSection) {
     const brandLink = brandSection.querySelector('a');
     if (brandLink) {
-      logoText.appendChild(brandLink);
+      logoText.appendChild(brandLink.cloneNode(true));
+    } else {
+      console.warn('Header: No brand link found in Brand section');
+      // Fallback: use text content
+      logoText.innerHTML = `<a href="/">${brandSection.textContent.trim()}</a>`;
     }
+  } else {
+    console.warn('Header: No brand section found');
+    logoText.innerHTML = '<a href="/">Home</a>';
   }
 
   logo.appendChild(logoText);
