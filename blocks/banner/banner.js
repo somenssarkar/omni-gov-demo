@@ -16,6 +16,9 @@
  */
 
 export default function decorate(block) {
+  // eslint-disable-next-line no-console
+  console.log('Banner decorate function called', block);
+
   // Create USWDS banner structure
   const banner = document.createElement('section');
   banner.className = 'usa-banner';
@@ -159,4 +162,7 @@ export default function decorate(block) {
   // Replace block content
   block.textContent = '';
   block.append(banner);
+
+  // eslint-disable-next-line no-console
+  console.log('Banner content appended successfully', block.innerHTML.length);
 }
