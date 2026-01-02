@@ -702,6 +702,19 @@ async function loadFooter(footer) {
 }
 
 /**
+ * Loads a block named 'banner' into header (before header content)
+ * Government banner is auto-included on every page
+ * @param {Element} header header element
+ * @returns {Promise}
+ */
+async function loadBanner(header) {
+  const bannerBlock = buildBlock('banner', '');
+  header.prepend(bannerBlock);
+  decorateBlock(bannerBlock);
+  return loadBlock(bannerBlock);
+}
+
+/**
  * Wait for Image.
  * @param {Element} section section element
  */
@@ -766,6 +779,7 @@ export {
   decorateSections,
   decorateTemplateAndTheme,
   getMetadata,
+  loadBanner,
   loadBlock,
   loadCSS,
   loadFooter,

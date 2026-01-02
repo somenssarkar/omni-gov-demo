@@ -1,0 +1,15 @@
+// USWDS Banner Component
+// Official USWDS government banner styling for EDS banner block
+
+// Import USWDS banner component styles directly
+// This imports all the official USWDS CSS classes for the government banner
+@forward "usa-banner";
+
+// Site-specific customizations (if needed)
+// The banner block is auto-included on every page
+// Keep customizations minimal to maintain USWDS compliance
+
+.banner {
+  // No custom styles needed - USWDS banner is complete as-is
+  // Add site-specific overrides here only if absolutely necessary
+}

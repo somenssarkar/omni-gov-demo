@@ -1,5 +1,6 @@
 import {
   buildBlock,
+  loadBanner,
   loadHeader,
   loadFooter,
   decorateButtons,
@@ -118,7 +119,13 @@ async function loadEager(doc) {
  * @param {Element} doc The container element
  */
 async function loadLazy(doc) {
-  loadHeader(doc.querySelector('header'));
+  const header = doc.querySelector('header');
+
+  // Load government banner (auto-included on every page)
+  loadBanner(header);
+
+  // Load header navigation
+  loadHeader(header);
 
   const main = doc.querySelector('main');
   await loadSections(main);
