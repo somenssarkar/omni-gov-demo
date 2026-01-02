@@ -142,7 +142,7 @@ export default function decorate(block) {
   const httpsBold = document.createElement('strong');
   httpsBold.textContent = 'https://';
   httpsHeading.append(httpsBold);
-  httpsHeading.append(document.createTextNode(' means you've safely connected to the .gov website. Share sensitive information only on official, secure websites.'));
+  httpsHeading.append(document.createTextNode(" means you've safely connected to the .gov website. Share sensitive information only on official, secure websites."));
 
   httpsContent.append(httpsHeading);
   httpsCol.append(httpsIcon, httpsContent);
