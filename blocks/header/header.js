@@ -26,33 +26,58 @@ function makeLinksRelative(container) {
  * Creates official USWDS header structure from EDS fragment
  *
  * EDS Authoring Structure (Google Docs /header):
- * ┌──────────────────────────────────────────────┐
- * │ # Header                                     │
- * │                                              │
- * │ ## Brand                                     │
- * │ [Site Name](/)                               │
- * │                                              │
- * │ ## Sections                                  │
- * │ - [Home](/)                                  │
- * │ - [Services](/services)                      │
- * │   - [Primary Care](/services/primary)        │
- * │   - [Specialists](/services/specialists)     │
- * │ - [About](/about)                            │
- * │                                              │
- * │ ## Tools                                     │
- * │ - [Search](/search)                          │
- * │ - [Login](/login)                            │
- * └──────────────────────────────────────────────┘
+ * Use NATIVE Google Docs formatting, NOT markdown syntax.
+ * 
+ * ┌──────────────────────────────────────────────────────────────┐
+ * │ Header                         ← Apply Heading 1 style       │
+ * │                                                              │
+ * │ Brand                          ← Apply Heading 2 style       │
+ * │ [Logo Image]                   ← Optional: Insert image      │
+ * │ Constituent Health Agency      ← Text with hyperlink to /    │
+ * │                                                              │
+ * │ Sections                       ← Apply Heading 2 style       │
+ * │ • Home                         ← Bullet list, link to /      │
+ * │ • Health Services              ← Link to full AEM URL*       │
+ * │   ◦ Primary Care               ← Indented bullet (sub-item)  │
+ * │   ◦ Specialty Care             ← Indented bullet (sub-item)  │
+ * │ • Benefits                     ← Link to /benefits           │
+ * │ • Resources                    ← Link to /resources          │
+ * │ • Locations                    ← Link to /locations          │
+ * │                                                              │
+ * │ Tools                          ← Apply Heading 2 style       │
+ * │ • Search                       ← Bullet, link (gets 🔍 icon) │
+ * │ • Login                        ← Bullet, link (gets 👤 icon) │
+ * └──────────────────────────────────────────────────────────────┘
+ * 
+ * *Link Format: Use full AEM preview URLs for validation:
+ *   https://main--omni-gov-demo--somenssarkar.aem.page/services
+ *   Code automatically converts to relative paths.
+ * 
+ * How to Apply in Google Docs:
+ * 1. Headings: Select text → Format → Paragraph styles → Heading 1/2
+ * 2. Links: Select text → Ctrl+K (or Cmd+K) → Paste URL → Apply
+ * 3. Bullets: Select lines → Format → Bullets & numbering
+ * 4. Sub-items: Tab key to indent bullets (creates nested list)
  *
  * USWDS Output Structure:
  * - usa-overlay (mobile menu backdrop)
  * - usa-header usa-header--extended
- *   - usa-navbar (logo + menu button)
+ *   - usa-navbar (logo + secondary nav + menu button)
+ *     - usa-logo (with optional image)
+ *     - usa-nav__secondary (tools/utility links with icons)
+ *     - usa-menu-btn (mobile menu toggle)
  *   - usa-nav
  *     - usa-nav__inner
  *       - usa-nav__close button
- *       - usa-nav__primary (main navigation)
- *       - usa-nav__secondary (tools/utility links)
+ *       - usa-nav__primary (main navigation with accordion)
+ *       - usa-nav__submenu (nested navigation items)
+ *
+ * Features:
+ * - Responsive mobile/desktop toggle
+ * - Accordion submenus with ARIA support
+ * - Auto-icon detection for Search and Login links
+ * - URL normalization for AEM portability
+ * - Keyboard navigation (Escape to close menu)
  *
  * Reference: https://designsystem.digital.gov/components/header/
  */
