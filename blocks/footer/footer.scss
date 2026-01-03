@@ -16,6 +16,12 @@
     }
   }
   
+  // Ensure all footer headings align
+  .usa-footer__primary-link {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+  
   // Reduce social icon size
   .usa-footer__social-links {
     .usa-social-link__icon {

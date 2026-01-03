@@ -418,13 +418,11 @@ export default async function decorate(block) {
   footer.appendChild(primary);
   
   // Secondary section (legal links and copyright)
-  // Legal links come from sections, copyright from a separate section or default
-  if (sections['legal-links'] || sections['legal']) {
+  // Legal links come from "privacy-links" section, copyright is auto-generated
+  if (sections['privacy-links'] || sections['legal-links'] || sections['legal']) {
+    const legalLinks = sections['privacy-links'] || sections['legal-links'] || sections['legal'];
     const copyrightContent = sections['copyright'] || null;
-    footer.appendChild(createSecondarySection(
-      sections['legal-links'] || sections['legal'],
-      copyrightContent
-    ));
+    footer.appendChild(createSecondarySection(legalLinks, copyrightContent));
   }
   
   // Identifier section

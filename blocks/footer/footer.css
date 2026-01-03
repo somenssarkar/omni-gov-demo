@@ -4449,6 +4449,10 @@ through all possible variants
   margin-left: auto;
   margin-right: auto;
 }
+.footer .usa-footer__primary-link {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
 .footer .usa-footer__social-links .usa-social-link__icon {
   width: 1.5rem;
   height: 1.5rem;
