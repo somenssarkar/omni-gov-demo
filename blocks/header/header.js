@@ -2,6 +2,26 @@ import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 /**
+ * Convert absolute AEM URLs to relative paths
+ * This allows authors to use full preview/live URLs in Google Docs
+ * and have them work correctly on any domain
+ */
+function makeLinksRelative(container) {
+  const links = container.querySelectorAll('a[href]');
+  links.forEach((link) => {
+    const href = link.getAttribute('href');
+    // Match AEM preview/live URLs and extract the path
+    // e.g., https://main--repo--owner.aem.page/services → /services
+    const aemUrlPattern = /^https?:\/\/[^/]+\.aem\.(page|live)(\/.*)?$/;
+    const match = href.match(aemUrlPattern);
+    if (match) {
+      const path = match[2] || '/';
+      link.setAttribute('href', path);
+    }
+  });
+}
+
+/**
  * USWDS Extended Header Block
  * Creates official USWDS header structure from EDS fragment
  *
@@ -153,6 +173,9 @@ export default async function decorate(block) {
     console.error('Header: Failed to load fragment from', headerPath);
     return;
   }
+
+  // Convert absolute AEM URLs to relative paths for portability
+  makeLinksRelative(fragment);
 
   // Parse fragment by H2 headings (Brand, Sections, Tools)
   const parsed = parseFragmentByHeadings(fragment);
