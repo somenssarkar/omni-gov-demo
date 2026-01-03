@@ -230,6 +230,25 @@ export default async function decorate(block) {
         const link = item.querySelector('a');
         if (link) {
           const clonedLink = link.cloneNode(true);
+          const linkText = clonedLink.textContent.trim().toLowerCase();
+
+          // Add icons for Search and Login links
+          if (linkText === 'search' || linkText.includes('search')) {
+            const icon = document.createElement('img');
+            icon.src = '/icons/search.svg';
+            icon.alt = '';
+            icon.className = 'usa-nav__secondary-icon';
+            icon.setAttribute('aria-hidden', 'true');
+            clonedLink.insertBefore(icon, clonedLink.firstChild);
+          } else if (linkText === 'login' || linkText === 'sign in' || linkText.includes('login')) {
+            const icon = document.createElement('img');
+            icon.src = '/icons/user.svg';
+            icon.alt = '';
+            icon.className = 'usa-nav__secondary-icon';
+            icon.setAttribute('aria-hidden', 'true');
+            clonedLink.insertBefore(icon, clonedLink.firstChild);
+          }
+
           li.appendChild(clonedLink);
         }
         secondaryLinks.appendChild(li);

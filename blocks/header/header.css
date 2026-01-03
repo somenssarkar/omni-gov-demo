@@ -3714,9 +3714,18 @@ html.usa-js-loading .usa-nav__submenu.usa-megamenu {
   text-decoration: none;
   font-weight: 400;
   font-size: 0.9375rem;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
 }
 .header .usa-navbar .usa-nav__secondary .usa-nav__secondary-links a:hover {
   text-decoration: underline;
+}
+.header .usa-nav__secondary-icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  filter: invert(26%) sepia(71%) saturate(1832%) hue-rotate(191deg) brightness(94%) contrast(101%);
 }
 .header .usa-menu-btn {
   display: none;
