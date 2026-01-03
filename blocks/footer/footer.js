@@ -352,6 +352,24 @@ export default async function decorate(block) {
   // Clear block
   block.textContent = '';
   
+  // Create USWDS Big Footer structure
+  const footer = document.createElement('footer');
+  footer.className = 'usa-footer usa-footer--big';
+  
+  // Primary section (main navigation columns)
+  const primary = document.createElement('div');
+  primary.className = 'usa-footer__primary-section';
+  
+  const primaryContainer = document.createElement('div');
+  primaryContainer.className = 'grid-container';
+  
+  const primaryGrid = document.createElement('div');
+  primaryGrid.className = 'grid-row grid-gap';
+  
+  // Main content column (navigation)
+  const mainCol = document.createElement('div');
+  mainCol.className = 'tablet:grid-col-8';
+  
   const nav = document.createElement('nav');
   nav.className = 'usa-footer__nav';
   nav.setAttribute('aria-label', 'Footer navigation');
@@ -373,25 +391,7 @@ export default async function decorate(block) {
   });
   
   nav.appendChild(navGrid);
-  mainCol.appendChild(nav);const primaryGrid = document.createElement('div');
-  primaryGrid.className = 'grid-row grid-gap';
-  
-  // Main content column (navigation)
-  const mainCol = document.createElement('div');
-  mainCol.className = 'tablet:grid-col-8';
-  
-  // Get column sections (About MHS, Services, Resources)
-  const columnContent = [];
-  ['about-mhs', 'services', 'resources'].forEach((key) => {
-    if (sections[key]) {
-      columnContent.push(sections[key]);
-    }
-  });
-  
-  if (columnContent.length > 0) {
-    mainCol.appendChild(createFooterNav(columnContent));
-  }
-  
+  mainCol.appendChild(nav);
   primaryGrid.appendChild(mainCol);
   
   // Social links column (Connect With Us)
