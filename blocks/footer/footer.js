@@ -42,69 +42,45 @@ function makeLinksRelative(element) {
 
 /**
  * Create USWDS Big Footer navigation section
- * @param {Array} columnSections Array of column content from fragment
- * @returns {Element} Footer nav element
+ * @param {string} heading The section heading
+ * @param {Array} content Array of content elements from fragment
+ * @returns {Element} Footer nav column element
  */
-function createFooterNav(columnSections) {
-  const nav = document.createElement('nav');
-  nav.className = 'usa-footer__nav';
-  nav.setAttribute('aria-label', 'Footer navigation');
+function createFooterColumn(heading, content) {
+  const col = document.createElement('div');
+  col.className = 'mobile-lg:grid-col-6 desktop:grid-col-3';
   
-  const grid = document.createElement('div');
-  grid.className = 'grid-row grid-gap';
+  const section = document.createElement('section');
+  section.className = 'usa-footer__primary-content usa-footer__primary-content--collapsible';
   
-  columnSections.forEach((section) => {
-    if (section && section.length > 0) {
-      const col = document.createElement('div');
-      col.className = 'mobile-lg:grid-col-6 desktop:grid-col-3';
+  const h4 = document.createElement('h4');
+  h4.className = 'usa-footer__primary-link';
+  h4.textContent = heading;
+  section.appendChild(h4);
+  
+  // Create links list
+  const ul = document.createElement('ul');
+  ul.className = 'usa-list usa-list--unstyled';
+  
+  content.forEach((el) => {
+    const links = el.querySelectorAll('a');
+    links.forEach((link) => {
+      const li = document.createElement('li');
+      li.className = 'usa-footer__secondary-link';
       
-      const sectionEl = document.createElement('section');
-      sectionEl.className = 'usa-footer__primary-content usa-footer__primary-content--collapsible';
+      const a = document.createElement('a');
+      a.href = link.href;
+      a.textContent = link.textContent;
       
-      // Find heading (first h3 or first strong/bold text)
-      const firstEl = section[0];
-      let heading = '';
-      
-      if (firstEl.tagName === 'H3') {
-        heading = firstEl.textContent.trim();
-      } else if (firstEl.querySelector('strong, b')) {
-        heading = firstEl.querySelector('strong, b').textContent.trim();
-      } else {
-        heading = firstEl.textContent.trim().split('\n')[0];
-      }
-      
-      const h4 = document.createElement('h4');
-      h4.className = 'usa-footer__primary-link';
-      h4.textContent = heading;
-      sectionEl.appendChild(h4);
-      
-      // Create links list
-      const ul = document.createElement('ul');
-      ul.className = 'usa-list usa-list--unstyled';
-      
-      section.forEach((el) => {
-        const links = el.querySelectorAll('a');
-        links.forEach((link) => {
-          const li = document.createElement('li');
-          li.className = 'usa-footer__secondary-link';
-          
-          const a = document.createElement('a');
-          a.href = link.href;
-          a.textContent = link.textContent;
-          
-          li.appendChild(a);
-          ul.appendChild(li);
-        });
-      });
-      
-      sectionEl.appendChild(ul);
-      col.appendChild(sectionEl);
-      grid.appendChild(col);
-    }
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
   });
   
-  nav.appendChild(grid);
-  return nav;
+  section.appendChild(ul);
+  col.appendChild(section);
+  
+  return col;
 }
 
 /**
@@ -120,6 +96,24 @@ function createSocialLinks(socialContent) {
   h4.className = 'usa-footer__primary-link';
   h4.textContent = 'Connect With Us';
   div.appendChild(h4);
+  
+  // Add description text
+  if (socialContent && socialContent.length > 0) {
+    // Find non-link text content (description)
+    socialContent.forEach((el) => {
+      // Get text that's not inside links
+      const clone = el.cloneNode(true);
+      clone.querySelectorAll('a').forEach((a) => a.remove());
+      const description = clone.textContent.trim();
+      
+      if (description) {
+        const p = document.createElement('p');
+        p.className = 'usa-footer__contact-heading';
+        p.textContent = description;
+        div.appendChild(p);
+      }
+    });
+  }
   
   const socialDiv = document.createElement('div');
   socialDiv.className = 'usa-footer__social-links grid-row grid-gap-1';
@@ -358,18 +352,28 @@ export default async function decorate(block) {
   // Clear block
   block.textContent = '';
   
-  // Create USWDS Big Footer structure
-  const footer = document.createElement('footer');
-  footer.className = 'usa-footer usa-footer--big';
+  const nav = document.createElement('nav');
+  nav.className = 'usa-footer__nav';
+  nav.setAttribute('aria-label', 'Footer navigation');
   
-  // Primary section (main navigation columns)
-  const primary = document.createElement('div');
-  primary.className = 'usa-footer__primary-section';
+  const navGrid = document.createElement('div');
+  navGrid.className = 'grid-row grid-gap';
   
-  const primaryContainer = document.createElement('div');
-  primaryContainer.className = 'grid-container';
+  // Create columns for each section
+  const footerSections = [
+    { key: 'about-mhs', heading: 'About MHS' },
+    { key: 'services', heading: 'Services' },
+    { key: 'resources', heading: 'Resources' }
+  ];
   
-  const primaryGrid = document.createElement('div');
+  footerSections.forEach(({ key, heading }) => {
+    if (sections[key]) {
+      navGrid.appendChild(createFooterColumn(heading, sections[key]));
+    }
+  });
+  
+  nav.appendChild(navGrid);
+  mainCol.appendChild(nav);const primaryGrid = document.createElement('div');
   primaryGrid.className = 'grid-row grid-gap';
   
   // Main content column (navigation)

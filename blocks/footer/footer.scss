@@ -5,6 +5,28 @@
 
 // Site-specific footer customizations
 .footer {
-  // Additional footer customizations can go here
-  // Use USWDS design tokens for consistency
+  // Match header width constraints
+  .usa-footer__primary-section,
+  .usa-footer__secondary-section,
+  .usa-identifier__container {
+    .grid-container {
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+  
+  // Ensure social icons display properly
+  .usa-footer__social-links {
+    .usa-social-link__icon {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+  
+  // Better spacing for footer contact heading
+  .usa-footer__contact-heading {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+  }
 }
