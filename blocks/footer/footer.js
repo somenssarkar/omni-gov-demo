@@ -426,7 +426,6 @@ export default async function decorate(block) {
       copyrightContent
     ));
   }
-  }
   
   // Identifier section
   if (sections['identifier']) {
