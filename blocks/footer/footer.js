@@ -97,7 +97,7 @@ function createSocialLinks(socialContent) {
   h4.textContent = 'Connect With Us';
   div.appendChild(h4);
   
-  // Add description text
+  // Add description text as regular list item
   if (socialContent && socialContent.length > 0) {
     // Find non-link text content (description)
     socialContent.forEach((el) => {
@@ -107,10 +107,13 @@ function createSocialLinks(socialContent) {
       const description = clone.textContent.trim();
       
       if (description) {
-        const p = document.createElement('p');
-        p.className = 'usa-footer__contact-heading';
-        p.textContent = description;
-        div.appendChild(p);
+        const ul = document.createElement('ul');
+        ul.className = 'usa-list usa-list--unstyled';
+        const li = document.createElement('li');
+        li.className = 'usa-footer__secondary-link';
+        li.textContent = description;
+        ul.appendChild(li);
+        div.appendChild(ul);
       }
     });
   }
@@ -170,7 +173,7 @@ function createSocialLinks(socialContent) {
  * @param {Array} legalContent Legal links content from fragment
  * @returns {Element} Secondary section element
  */
-function createSecondarySection(legalContent) {
+function createSecondarySection(legalContent, copyrightContent) {
   const section = document.createElement('div');
   section.className = 'usa-footer__secondary-section';
   
@@ -180,23 +183,9 @@ function createSecondarySection(legalContent) {
   const row = document.createElement('div');
   row.className = 'grid-row grid-gap';
   
-  const col = document.createElement('div');
-  col.className = 'usa-footer__logo grid-row mobile-lg:grid-col-6 mobile-lg:grid-gap-2';
-  
-  // Copyright text
-  const copyrightText = legalContent && legalContent.length > 0
-    ? legalContent[0].textContent.trim()
-    : `© ${new Date().getFullYear()} Community Health Clinic`;
-  
-  const copyrightP = document.createElement('p');
-  copyrightP.className = 'usa-footer__logo-heading';
-  copyrightP.textContent = copyrightText;
-  col.appendChild(copyrightP);
-  row.appendChild(col);
-  
-  // Legal links
+  // Legal links column (left side)
   const linksCol = document.createElement('div');
-  linksCol.className = 'usa-footer__contact-links mobile-lg:grid-col-6';
+  linksCol.className = 'usa-footer__contact-links mobile-lg:grid-col-8';
   
   const nav = document.createElement('nav');
   nav.className = 'usa-footer__nav';
@@ -226,6 +215,27 @@ function createSecondarySection(legalContent) {
   nav.appendChild(ul);
   linksCol.appendChild(nav);
   row.appendChild(linksCol);
+  
+  // Copyright column (right side)
+  const copyrightCol = document.createElement('div');
+  copyrightCol.className = 'usa-footer__logo grid-row mobile-lg:grid-col-4';
+  
+  // Copyright text - find it from copyrightContent or legalContent
+  let copyrightText = `© ${new Date().getFullYear()} Community Health Clinic`;
+  
+  if (copyrightContent && copyrightContent.length > 0) {
+    const textContent = copyrightContent[0].textContent.trim();
+    if (textContent.includes('©') || textContent.toLowerCase().includes('copyright')) {
+      copyrightText = textContent;
+    }
+  }
+  
+  const copyrightP = document.createElement('p');
+  copyrightP.className = 'usa-footer__logo-heading';
+  copyrightP.textContent = copyrightText;
+  copyrightCol.appendChild(copyrightP);
+  row.appendChild(copyrightCol);
+  
   grid.appendChild(row);
   section.appendChild(grid);
   
@@ -407,9 +417,15 @@ export default async function decorate(block) {
   primary.appendChild(primaryContainer);
   footer.appendChild(primary);
   
-  // Secondary section (legal links)
+  // Secondary section (legal links and copyright)
+  // Legal links come from sections, copyright from a separate section or default
   if (sections['legal-links'] || sections['legal']) {
-    footer.appendChild(createSecondarySection(sections['legal-links'] || sections['legal']));
+    const copyrightContent = sections['copyright'] || null;
+    footer.appendChild(createSecondarySection(
+      sections['legal-links'] || sections['legal'],
+      copyrightContent
+    ));
+  }
   }
   
   // Identifier section

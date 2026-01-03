@@ -16,17 +16,28 @@
     }
   }
   
-  // Ensure social icons display properly
+  // Reduce social icon size
   .usa-footer__social-links {
     .usa-social-link__icon {
-      width: 2rem;
-      height: 2rem;
+      width: 1.5rem;
+      height: 1.5rem;
     }
   }
   
-  // Better spacing for footer contact heading
-  .usa-footer__contact-heading {
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
+  // Align copyright text to the right
+  .usa-footer__logo {
+    justify-content: flex-end;
+    
+    .usa-footer__logo-heading {
+      text-align: right;
+      margin: 0;
+    }
+  }
+  
+  // Better spacing for secondary footer section
+  .usa-footer__secondary-section {
+    .grid-row {
+      align-items: center;
+    }
   }
 }
