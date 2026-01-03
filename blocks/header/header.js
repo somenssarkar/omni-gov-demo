@@ -97,6 +97,72 @@ function toggleSubmenu(button) {
 /**
  * Build USWDS header from fragment
  */
+/**
+ * Parse fragment content by H2 headings
+ * Returns an object with brand, sections, and tools content
+ */
+function parseFragmentByHeadings(fragment) {
+  const result = {
+    brand: null,
+    sections: null,
+    tools: null,
+  };
+
+  // Get all content from the fragment
+  const contentWrapper = fragment.querySelector('.default-content-wrapper');
+  if (!contentWrapper) {
+    console.error('Header: No default-content-wrapper found');
+    return result;
+  }
+
+  // Find all H2 headings and their following content
+  const elements = [...contentWrapper.children];
+  let currentSection = null;
+  let currentContent = [];
+
+  const saveCurrentSection = () => {
+    if (currentSection && currentContent.length > 0) {
+      // Create a container for this section's content
+      const container = document.createElement('div');
+      currentContent.forEach((el) => container.appendChild(el.cloneNode(true)));
+
+      const sectionName = currentSection.toLowerCase().trim();
+      if (sectionName.includes('brand')) {
+        result.brand = container;
+      } else if (sectionName.includes('section')) {
+        result.sections = container;
+      } else if (sectionName.includes('tool')) {
+        result.tools = container;
+      }
+    }
+  };
+
+  elements.forEach((el) => {
+    // Check for H2 or paragraph containing ## (AEM sometimes renders ## as <p>)
+    const isH2 = el.tagName === 'H2';
+    const isParagraphWithH2 = el.tagName === 'P' && el.textContent.trim().startsWith('##');
+
+    if (isH2 || isParagraphWithH2) {
+      // Save previous section
+      saveCurrentSection();
+
+      // Start new section
+      currentSection = el.textContent.replace(/^#+\s*/, '').trim();
+      currentContent = [];
+    } else if (currentSection) {
+      // Add to current section (skip H1/# Header title)
+      if (!(el.tagName === 'H1' || (el.tagName === 'P' && el.textContent.trim().startsWith('# ')))) {
+        currentContent.push(el);
+      }
+    }
+  });
+
+  // Don't forget the last section
+  saveCurrentSection();
+
+  return result;
+}
+
 export default async function decorate(block) {
   // Load header content from fragment
   const headerMeta = getMetadata('header');
@@ -110,25 +176,20 @@ export default async function decorate(block) {
 
   // Debug: log fragment structure
   console.log('Header: Fragment loaded', fragment);
-  console.log('Header: Fragment HTML', fragment.innerHTML.substring(0, 500));
 
-  // Parse fragment sections - fragment is a <main> element with .section children
-  // Each section contains a .default-content-wrapper with the actual content
-  const sections = fragment.querySelectorAll('.section > div');
+  // Parse fragment by H2 headings (Brand, Sections, Tools)
+  const parsed = parseFragmentByHeadings(fragment);
 
-  console.log('Header: Found', sections.length, 'sections');
+  console.log('Header: Parsed content', parsed);
 
-  if (sections.length < 2) {
-    console.error('Header: Expected at least 2 sections (Brand, Sections), found', sections.length);
-    // Try alternative: direct children
-    const altSections = [...fragment.children];
-    console.log('Header: Trying alternate - direct children:', altSections.length);
+  if (!parsed.brand && !parsed.sections) {
+    console.error('Header: Could not find Brand or Sections content');
     return;
   }
 
-  const brandSection = sections[0];
-  const navSection = sections[1];
-  const toolsSection = sections[2]; // Optional
+  const brandSection = parsed.brand;
+  const navSection = parsed.sections;
+  const toolsSection = parsed.tools;
 
   console.log('Header: Brand section', brandSection);
   console.log('Header: Nav section', navSection);
