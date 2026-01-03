@@ -108,57 +108,37 @@ function parseFragmentByHeadings(fragment) {
     tools: null,
   };
 
-  // Get all content from the fragment
-  const contentWrapper = fragment.querySelector('.default-content-wrapper');
+  // Get content wrapper - try multiple selectors
+  let contentWrapper = fragment.querySelector('.default-content-wrapper');
   if (!contentWrapper) {
-    console.error('Header: No default-content-wrapper found');
-    return result;
+    // Try the section div directly
+    contentWrapper = fragment.querySelector('.section > div');
+  }
+  if (!contentWrapper) {
+    // Fragment might be the content itself
+    contentWrapper = fragment;
   }
 
-  // Find all H2 headings and their following content
-  const elements = [...contentWrapper.children];
-  let currentSection = null;
-  let currentContent = [];
+  // Find H2 elements by ID (AEM generates IDs from heading text)
+  const brandH2 = contentWrapper.querySelector('h2#brand');
+  const sectionsH2 = contentWrapper.querySelector('h2#sections');
+  const toolsH2 = contentWrapper.querySelector('h2#tools');
 
-  const saveCurrentSection = () => {
-    if (currentSection && currentContent.length > 0) {
-      // Create a container for this section's content
-      const container = document.createElement('div');
-      currentContent.forEach((el) => container.appendChild(el.cloneNode(true)));
-
-      const sectionName = currentSection.toLowerCase().trim();
-      if (sectionName.includes('brand')) {
-        result.brand = container;
-      } else if (sectionName.includes('section')) {
-        result.sections = container;
-      } else if (sectionName.includes('tool')) {
-        result.tools = container;
-      }
+  // Get content after each H2 until the next H2 or end
+  const getNextSiblingContent = (h2) => {
+    if (!h2) return null;
+    const container = document.createElement('div');
+    let sibling = h2.nextElementSibling;
+    while (sibling && sibling.tagName !== 'H2' && sibling.tagName !== 'H1') {
+      container.appendChild(sibling.cloneNode(true));
+      sibling = sibling.nextElementSibling;
     }
+    return container.children.length > 0 ? container : null;
   };
 
-  elements.forEach((el) => {
-    // Check for H2 or paragraph containing ## (AEM sometimes renders ## as <p>)
-    const isH2 = el.tagName === 'H2';
-    const isParagraphWithH2 = el.tagName === 'P' && el.textContent.trim().startsWith('##');
-
-    if (isH2 || isParagraphWithH2) {
-      // Save previous section
-      saveCurrentSection();
-
-      // Start new section
-      currentSection = el.textContent.replace(/^#+\s*/, '').trim();
-      currentContent = [];
-    } else if (currentSection) {
-      // Add to current section (skip H1/# Header title)
-      if (!(el.tagName === 'H1' || (el.tagName === 'P' && el.textContent.trim().startsWith('# ')))) {
-        currentContent.push(el);
-      }
-    }
-  });
-
-  // Don't forget the last section
-  saveCurrentSection();
+  result.brand = getNextSiblingContent(brandH2);
+  result.sections = getNextSiblingContent(sectionsH2);
+  result.tools = getNextSiblingContent(toolsH2);
 
   return result;
 }
@@ -174,13 +154,8 @@ export default async function decorate(block) {
     return;
   }
 
-  // Debug: log fragment structure
-  console.log('Header: Fragment loaded', fragment);
-
   // Parse fragment by H2 headings (Brand, Sections, Tools)
   const parsed = parseFragmentByHeadings(fragment);
-
-  console.log('Header: Parsed content', parsed);
 
   if (!parsed.brand && !parsed.sections) {
     console.error('Header: Could not find Brand or Sections content');
@@ -190,10 +165,6 @@ export default async function decorate(block) {
   const brandSection = parsed.brand;
   const navSection = parsed.sections;
   const toolsSection = parsed.tools;
-
-  console.log('Header: Brand section', brandSection);
-  console.log('Header: Nav section', navSection);
-  console.log('Header: Tools section', toolsSection);
 
   // Create overlay for mobile menu
   const overlay = document.createElement('div');
@@ -216,15 +187,15 @@ export default async function decorate(block) {
   if (brandSection) {
     const brandLink = brandSection.querySelector('a');
     if (brandLink) {
-      logoText.appendChild(brandLink.cloneNode(true));
+      const clonedLink = brandLink.cloneNode(true);
+      clonedLink.setAttribute('title', clonedLink.textContent);
+      logoText.appendChild(clonedLink);
     } else {
-      console.warn('Header: No brand link found in Brand section');
       // Fallback: use text content
-      logoText.innerHTML = `<a href="/">${brandSection.textContent.trim()}</a>`;
+      logoText.innerHTML = `<a href="/" title="Home">${brandSection.textContent.trim()}</a>`;
     }
   } else {
-    console.warn('Header: No brand section found');
-    logoText.innerHTML = '<a href="/">Home</a>';
+    logoText.innerHTML = '<a href="/" title="Home">Home</a>';
   }
 
   logo.appendChild(logoText);

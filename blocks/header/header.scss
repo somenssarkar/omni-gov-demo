@@ -9,7 +9,7 @@
 // Site-specific customizations
 // These styles cascade with site themes (constituent-health / service-member-health)
 
-header {
+.header {
   // Ensure header stays at top on scroll
   .usa-header {
     position: sticky;
@@ -17,28 +17,133 @@ header {
     z-index: 300;
   }
 
-  // Brand/logo area customization
+  // Brand/logo area customization - ensure text is readable
   .usa-logo__text a {
-    color: var(--uswds-color-primary, #005ea2);
+    color: #1b1b1b; // Dark text for readability
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.25rem;
+    display: block;
+    background: transparent !important; // Override any background
 
     &:hover {
-      color: var(--uswds-color-primary-dark, #1a4480);
+      color: #005ea2;
     }
+
+    &:visited {
+      color: #1b1b1b;
+    }
+  }
+
+  // Primary navigation alignment
+  .usa-nav__primary {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .usa-nav__primary-item {
+    position: relative;
   }
 
   // Primary navigation links use theme colors
   .usa-nav__link {
+    color: #1b1b1b;
+    text-decoration: none;
+    padding: 1rem;
+    display: block;
+
     &:hover {
-      color: var(--uswds-color-primary, #005ea2);
+      color: #005ea2;
+    }
+
+    span {
+      display: inline;
+    }
+  }
+
+  // Dropdown arrow indicator for items with submenus
+  .usa-accordion__button.usa-nav__link {
+    position: relative;
+    padding-right: 2rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    // Add dropdown chevron
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid currentColor;
+      transition: transform 0.2s ease;
+    }
+
+    &[aria-expanded="true"]::after {
+      transform: translateY(-50%) rotate(180deg);
+    }
+  }
+
+  // Submenu styling
+  .usa-nav__submenu {
+    background: #f0f0f0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  .usa-nav__submenu-item {
+    a {
+      display: block;
+      padding: 0.75rem 1rem;
+      color: #1b1b1b;
+      text-decoration: none;
+
+      &:hover {
+        background: #e0e0e0;
+        color: #005ea2;
+      }
     }
   }
 
   // Secondary navigation (tools) styling
-  .usa-nav__secondary-links a {
-    color: var(--uswds-color-primary, #005ea2);
+  .usa-nav__secondary {
+    position: absolute;
+    right: 2rem;
+    top: 0.5rem;
+  }
 
-    &:hover {
-      text-decoration: underline;
+  .usa-nav__secondary-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 1rem;
+
+    li {
+      margin: 0;
+    }
+
+    a {
+      color: #005ea2;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }
