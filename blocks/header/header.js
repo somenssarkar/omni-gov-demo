@@ -174,33 +174,71 @@ export default async function decorate(block) {
   const header = document.createElement('header');
   header.className = 'usa-header usa-header--extended';
 
-  // Create navbar (logo + menu button)
+  // Create navbar (logo + secondary tools + menu button)
   const navbar = document.createElement('div');
   navbar.className = 'usa-navbar';
 
-  // Logo
+  // Logo with optional icon
   const logo = document.createElement('div');
   logo.className = 'usa-logo';
-  const logoText = document.createElement('em');
-  logoText.className = 'usa-logo__text';
+  logo.setAttribute('id', 'extended-logo');
 
   if (brandSection) {
     const brandLink = brandSection.querySelector('a');
+    const brandImg = brandSection.querySelector('img');
+
+    // Check for logo image
+    if (brandImg) {
+      const logoImg = brandImg.cloneNode(true);
+      logoImg.className = 'usa-logo__img';
+      logo.appendChild(logoImg);
+    }
+
+    // Add text
+    const logoText = document.createElement('em');
+    logoText.className = 'usa-logo__text';
+
     if (brandLink) {
       const clonedLink = brandLink.cloneNode(true);
       clonedLink.setAttribute('title', clonedLink.textContent);
       logoText.appendChild(clonedLink);
     } else {
-      // Fallback: use text content
       logoText.innerHTML = `<a href="/" title="Home">${brandSection.textContent.trim()}</a>`;
     }
+    logo.appendChild(logoText);
   } else {
+    const logoText = document.createElement('em');
+    logoText.className = 'usa-logo__text';
     logoText.innerHTML = '<a href="/" title="Home">Home</a>';
+    logo.appendChild(logoText);
   }
 
-  logo.appendChild(logoText);
+  // Secondary navigation (tools) - placed in navbar for USWDS Extended Header
+  const secondary = document.createElement('div');
+  secondary.className = 'usa-nav__secondary';
 
-  // Menu button
+  if (toolsSection) {
+    const secondaryLinks = document.createElement('ul');
+    secondaryLinks.className = 'usa-nav__secondary-links';
+
+    const toolsList = toolsSection.querySelector('ul');
+    if (toolsList) {
+      const toolItems = toolsList.querySelectorAll('li');
+      toolItems.forEach((item) => {
+        const li = document.createElement('li');
+        li.className = 'usa-nav__secondary-item';
+        const link = item.querySelector('a');
+        if (link) {
+          const clonedLink = link.cloneNode(true);
+          li.appendChild(clonedLink);
+        }
+        secondaryLinks.appendChild(li);
+      });
+    }
+    secondary.appendChild(secondaryLinks);
+  }
+
+  // Menu button (for mobile)
   const menuBtn = document.createElement('button');
   menuBtn.className = 'usa-menu-btn';
   menuBtn.setAttribute('type', 'button');
@@ -209,6 +247,7 @@ export default async function decorate(block) {
   menuBtn.textContent = 'Menu';
 
   navbar.appendChild(logo);
+  navbar.appendChild(secondary);
   navbar.appendChild(menuBtn);
 
   // Create nav element
@@ -280,32 +319,6 @@ export default async function decorate(block) {
 
       navInner.appendChild(navList);
     }
-  }
-
-  // Secondary navigation (tools)
-  if (toolsSection) {
-    const secondary = document.createElement('div');
-    secondary.className = 'usa-nav__secondary';
-
-    const secondaryLinks = document.createElement('ul');
-    secondaryLinks.className = 'usa-nav__secondary-links';
-
-    const toolsList = toolsSection.querySelector('ul');
-    if (toolsList) {
-      const toolItems = toolsList.querySelectorAll('li');
-      toolItems.forEach((item) => {
-        const li = document.createElement('li');
-        li.className = 'usa-nav__secondary-item';
-        const link = item.querySelector('a');
-        if (link) {
-          li.appendChild(link);
-        }
-        secondaryLinks.appendChild(li);
-      });
-    }
-
-    secondary.appendChild(secondaryLinks);
-    navInner.appendChild(secondary);
   }
 
   nav.appendChild(navInner);

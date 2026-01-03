@@ -8,56 +8,138 @@
 
 // Site-specific customizations
 // These styles cascade with site themes (constituent-health / service-member-health)
+// Override colors in site-specific styles.css files
 
 .header {
-  // Ensure header stays at top on scroll
-  .usa-header {
-    position: sticky;
-    top: 0;
-    z-index: 300;
+  // Navbar layout - logo on left, secondary on right
+  .usa-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
   }
 
-  // Brand/logo area customization - ensure text is readable
-  .usa-logo__text a {
-    color: #1b1b1b; // Dark text for readability
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 1.25rem;
-    display: block;
-    background: transparent !important; // Override any background
+  // Logo with optional icon
+  .usa-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+    max-width: none;
 
-    &:hover {
-      color: #005ea2;
+    // Logo image/icon
+    &__img,
+    img {
+      height: 40px;
+      width: auto;
+      flex-shrink: 0;
     }
 
-    &:visited {
-      color: #1b1b1b;
+    // Logo text
+    &__text {
+      font-style: normal;
+      margin: 0;
+
+      a {
+        color: #1b1b1b;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1.375rem;
+        line-height: 1.2;
+
+        &:hover {
+          color: #005ea2;
+        }
+
+        &:visited {
+          color: #1b1b1b;
+        }
+      }
     }
   }
 
-  // Primary navigation alignment
+  // Secondary navigation in navbar (Search, Login)
+  .usa-navbar .usa-nav__secondary {
+    position: static;
+    margin: 0;
+    flex-shrink: 0;
+
+    .usa-nav__secondary-links {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 1.5rem;
+
+      li {
+        margin: 0;
+      }
+
+      a {
+        color: #005ea2;
+        text-decoration: none;
+        font-weight: 400;
+        font-size: 0.9375rem;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  // Hide menu button on desktop
+  .usa-menu-btn {
+    display: none;
+
+    @media (max-width: 63.99em) {
+      display: block;
+    }
+  }
+
+  // Primary navigation bar
+  .usa-nav {
+    border-top: 1px solid #dfe1e2;
+    background: #fff;
+  }
+
+  .usa-nav__inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
   .usa-nav__primary {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     margin: 0;
     padding: 0;
     list-style: none;
+    gap: 0;
   }
 
   .usa-nav__primary-item {
     position: relative;
+    margin: 0;
   }
 
-  // Primary navigation links use theme colors
+  // Primary navigation links
   .usa-nav__link {
     color: #1b1b1b;
     text-decoration: none;
-    padding: 1rem;
+    padding: 1rem 1.25rem;
     display: block;
+    font-weight: 400;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
 
     &:hover {
       color: #005ea2;
+      background-color: #f0f0f0;
     }
 
     span {
@@ -65,15 +147,12 @@
     }
   }
 
-  // Dropdown arrow indicator for items with submenus
+  // Dropdown button styling
   .usa-accordion__button.usa-nav__link {
     position: relative;
     padding-right: 2rem;
-    background: transparent;
-    border: none;
-    cursor: pointer;
 
-    // Add dropdown chevron
+    // Dropdown chevron
     &::after {
       content: '';
       position: absolute;
@@ -93,12 +172,17 @@
     }
   }
 
-  // Submenu styling
+  // Submenu dropdown
   .usa-nav__submenu {
-    background: #f0f0f0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #1b1b1b;
     list-style: none;
-    padding: 0;
+    padding: 0.5rem 0;
     margin: 0;
+    min-width: 200px;
+    z-index: 400;
 
     &[hidden] {
       display: none;
@@ -108,42 +192,79 @@
   .usa-nav__submenu-item {
     a {
       display: block;
-      padding: 0.75rem 1rem;
-      color: #1b1b1b;
+      padding: 0.5rem 1.25rem;
+      color: #fff;
       text-decoration: none;
+      font-size: 0.9375rem;
+
+      &:hover {
+        background: #3d4551;
+      }
+    }
+  }
+
+  // Mobile styles
+  @media (max-width: 63.99em) {
+    .usa-navbar {
+      padding: 0.75rem 1rem;
+    }
+
+    .usa-navbar .usa-nav__secondary {
+      display: none;
+    }
+
+    .usa-nav {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      max-width: 320px;
+      background: #fff;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 500;
+      overflow-y: auto;
+
+      &.is-visible {
+        transform: translateX(0);
+      }
+    }
+
+    .usa-nav__primary {
+      flex-direction: column;
+    }
+
+    .usa-nav__submenu {
+      position: static;
+      background: #f0f0f0;
+    }
+
+    .usa-nav__submenu-item a {
+      color: #1b1b1b;
 
       &:hover {
         background: #e0e0e0;
-        color: #005ea2;
       }
     }
   }
 
-  // Secondary navigation (tools) styling
-  .usa-nav__secondary {
-    position: absolute;
-    right: 2rem;
-    top: 0.5rem;
-  }
+  // Overlay for mobile menu
+  .usa-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 400;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
 
-  .usa-nav__secondary-links {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 1rem;
-
-    li {
-      margin: 0;
-    }
-
-    a {
-      color: #005ea2;
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
+    &.is-visible {
+      opacity: 1;
+      visibility: visible;
     }
   }
 }
