@@ -1,0 +1,10 @@
+// blocks/footer/footer.scss
+// Import USWDS Footer component styles directly
+@forward "usa-footer";
+@forward "usa-identifier";
+
+// Site-specific footer customizations
+.footer {
+  // Additional footer customizations can go here
+  // Use USWDS design tokens for consistency
+}

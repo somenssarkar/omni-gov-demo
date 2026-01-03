@@ -16,7 +16,9 @@
     "watch:hero": "sass --load-path=node_modules/@uswds/uswds/packages --watch blocks/hero/hero.scss:blocks/hero/hero.css",
     "build:header": "sass --load-path=node_modules/@uswds/uswds/packages --style=expanded blocks/header/header.scss:blocks/header/header.css",
     "watch:header": "sass --load-path=node_modules/@uswds/uswds/packages --watch blocks/header/header.scss:blocks/header/header.css",
-    "build:all": "npm run build:banner && npm run build:cards && npm run build:hero && npm run build:header"
+    "build:footer": "sass --load-path=node_modules/@uswds/uswds/packages --style=expanded blocks/footer/footer.scss:blocks/footer/footer.css",
+    "watch:footer": "sass --load-path=node_modules/@uswds/uswds/packages --watch blocks/footer/footer.scss:blocks/footer/footer.css",
+    "build:all": "npm run build:banner && npm run build:cards && npm run build:hero && npm run build:header && npm run build:footer"
   },
   "repository": {
     "type": "git",
