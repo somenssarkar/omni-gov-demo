@@ -260,7 +260,7 @@ function createIdentifier(identifierContent) {
   
   // Left side: Logo and identity
   const identityDiv = document.createElement('div');
-  identityDiv.className = 'usa-identifier__section--masthead';
+  identityDiv.className = 'usa-identifier__section--masthead usa-identifier__section--usagov';
   
   const logos = document.createElement('div');
   logos.className = 'usa-identifier__logos';

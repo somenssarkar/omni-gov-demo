@@ -99,5 +99,34 @@
         color: #ffffff;
       }
     }
+    
+    // Ensure proper horizontal layout
+    .usa-identifier__section {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      
+      @media (min-width: 64em) {
+        flex-wrap: nowrap;
+      }
+    }
+    
+    .usa-identifier__section--masthead {
+      flex: 0 1 auto;
+    }
+    
+    .usa-identifier__section--required-links {
+      flex: 0 1 auto;
+      margin-top: 0;
+    }
+    
+    .usa-identifier__required-links-list {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
   }
 }

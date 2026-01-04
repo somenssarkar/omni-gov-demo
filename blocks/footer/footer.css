@@ -4505,5 +4505,30 @@ through all possible variants
 .footer .usa-identifier .usa-identifier__required-link:hover {
   color: #ffffff;
 }
+.footer .usa-identifier .usa-identifier__section {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+@media (min-width: 64em) {
+  .footer .usa-identifier .usa-identifier__section {
+    flex-wrap: nowrap;
+  }
+}
+.footer .usa-identifier .usa-identifier__section--masthead {
+  flex: 0 1 auto;
+}
+.footer .usa-identifier .usa-identifier__section--required-links {
+  flex: 0 1 auto;
+  margin-top: 0;
+}
+.footer .usa-identifier .usa-identifier__required-links-list {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
 
 /*# sourceMappingURL=footer.css.map */
