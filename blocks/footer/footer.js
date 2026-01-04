@@ -90,7 +90,7 @@ function createFooterColumn(heading, content) {
  */
 function createSocialLinks(socialContent) {
   const div = document.createElement('div');
-  div.className = 'usa-footer__primary-content';
+  div.className = 'usa-footer__primary-content usa-footer__primary-content--collapsible';
   
   const h4 = document.createElement('h4');
   h4.className = 'usa-footer__primary-link';
