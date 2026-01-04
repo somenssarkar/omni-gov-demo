@@ -84,32 +84,38 @@ body[data-site="service-member-health"] .footer {
     background-color: #162e51;
   }
   
-  /* Ensure all footer text is white/light */
+  /* Ensure all footer text and links are white/light */
   .usa-footer__primary-link,
   .usa-footer__secondary-link,
+  .usa-footer__secondary-link a,
+  .usa-footer__primary-content a,
+  .usa-footer__nav a,
   .usa-footer__contact-links a,
   .usa-footer__social-links a,
   .usa-identifier__identity-domain,
   .usa-identifier__identity-disclaimer {
-    color: #ffffff;
+    color: #ffffff !important;
   }
   
   /* Footer links hover state */
   .usa-footer__secondary-link:hover,
+  .usa-footer__secondary-link a:hover,
+  .usa-footer__primary-content a:hover,
+  .usa-footer__nav a:hover,
   .usa-footer__contact-links a:hover {
-    color: #adc8e6;
+    color: #adc8e6 !important;
     text-decoration: underline;
   }
   
   /* Identifier links */
   .usa-identifier__identity-disclaimer a,
   .usa-identifier__required-link {
-    color: #adc8e6;
+    color: #adc8e6 !important;
   }
   
   .usa-identifier__identity-disclaimer a:hover,
   .usa-identifier__required-link:hover {
-    color: #ffffff;
+    color: #ffffff !important;
   }
   
   /* Copyright text */
