@@ -254,11 +254,13 @@ function createIdentifier(identifierContent) {
   const container = document.createElement('div');
   container.className = 'usa-identifier__container';
   
-  const section = document.createElement('div');
+  const section = document.createElement('section');
   section.className = 'usa-identifier__section';
+  section.setAttribute('aria-label', 'Agency identifier');
   
-  const logoSection = document.createElement('div');
-  logoSection.className = 'usa-identifier__section--masthead';
+  // Left side: Logo and identity
+  const identityDiv = document.createElement('div');
+  identityDiv.className = 'usa-identifier__section--masthead';
   
   const logos = document.createElement('div');
   logos.className = 'usa-identifier__logos';
@@ -271,15 +273,14 @@ function createIdentifier(identifierContent) {
   logoImg.className = 'usa-identifier__logo-img';
   logoImg.src = '/icons/shield.svg';
   logoImg.alt = 'Department of War logo';
-  logoImg.setAttribute('aria-hidden', 'true');
+  logoImg.setAttribute('role', 'img');
   
   logoLink.appendChild(logoImg);
   logos.appendChild(logoLink);
-  logoSection.appendChild(logos);
+  identityDiv.appendChild(logos);
   
   const identity = document.createElement('div');
   identity.className = 'usa-identifier__identity';
-  identity.setAttribute('aria-label', 'Agency identifier');
   
   const identityText = identifierContent && identifierContent.length > 0
     ? identifierContent[0].textContent.trim()
@@ -291,20 +292,20 @@ function createIdentifier(identifierContent) {
   
   const p2 = document.createElement('p');
   p2.className = 'usa-identifier__identity-disclaimer';
-  p2.textContent = 'An official website of the Department of War';
+  p2.innerHTML = 'An official website of the <a href="https://www.defense.gov">Department of War</a>';
   
   identity.appendChild(p1);
   identity.appendChild(p2);
-  logoSection.appendChild(identity);
-  section.appendChild(logoSection);
+  identityDiv.appendChild(identity);
+  section.appendChild(identityDiv);
   
-  // Required links section
-  const reqLinks = document.createElement('div');
-  reqLinks.className = 'usa-identifier__section--required-links';
+  // Right side: Required links
+  const reqLinksDiv = document.createElement('div');
+  reqLinksDiv.className = 'usa-identifier__section--required-links';
   
   const reqNav = document.createElement('nav');
-  reqNav.className = 'usa-identifier__section--usagov';
-  reqNav.setAttribute('aria-label', 'Important government links');
+  reqNav.className = 'usa-identifier__required-links';
+  reqNav.setAttribute('aria-label', 'Important links');
   
   const reqUl = document.createElement('ul');
   reqUl.className = 'usa-identifier__required-links-list';
@@ -329,8 +330,8 @@ function createIdentifier(identifierContent) {
   });
   
   reqNav.appendChild(reqUl);
-  reqLinks.appendChild(reqNav);
-  section.appendChild(reqLinks);
+  reqLinksDiv.appendChild(reqNav);
+  section.appendChild(reqLinksDiv);
   
   container.appendChild(section);
   identifier.appendChild(container);

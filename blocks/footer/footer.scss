@@ -61,4 +61,43 @@
       align-items: center;
     }
   }
+  
+  // Identifier section improvements
+  .usa-identifier {
+    // Ensure proper logo visibility
+    .usa-identifier__logo-img {
+      width: 2.5rem;
+      height: 2.5rem;
+      filter: brightness(0) invert(1); // Make shield white on dark background
+    }
+    
+    // Better text contrast and spacing
+    .usa-identifier__identity-domain {
+      font-weight: 700;
+      font-size: 1.06rem;
+    }
+    
+    .usa-identifier__identity-disclaimer {
+      font-size: 0.93rem;
+      
+      a {
+        color: #73b3e7; // USWDS link color for dark backgrounds
+        text-decoration: underline;
+        
+        &:hover {
+          color: #ffffff;
+        }
+      }
+    }
+    
+    // Ensure links are visible and properly spaced
+    .usa-identifier__required-link {
+      font-size: 0.93rem;
+      color: #73b3e7;
+      
+      &:hover {
+        color: #ffffff;
+      }
+    }
+  }
 }

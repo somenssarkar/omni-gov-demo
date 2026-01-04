@@ -4479,5 +4479,31 @@ through all possible variants
 .footer .usa-footer__secondary-section .grid-row {
   align-items: center;
 }
+.footer .usa-identifier .usa-identifier__logo-img {
+  width: 2.5rem;
+  height: 2.5rem;
+  filter: brightness(0) invert(1);
+}
+.footer .usa-identifier .usa-identifier__identity-domain {
+  font-weight: 700;
+  font-size: 1.06rem;
+}
+.footer .usa-identifier .usa-identifier__identity-disclaimer {
+  font-size: 0.93rem;
+}
+.footer .usa-identifier .usa-identifier__identity-disclaimer a {
+  color: #73b3e7;
+  text-decoration: underline;
+}
+.footer .usa-identifier .usa-identifier__identity-disclaimer a:hover {
+  color: #ffffff;
+}
+.footer .usa-identifier .usa-identifier__required-link {
+  font-size: 0.93rem;
+  color: #73b3e7;
+}
+.footer .usa-identifier .usa-identifier__required-link:hover {
+  color: #ffffff;
+}
 
 /*# sourceMappingURL=footer.css.map */
