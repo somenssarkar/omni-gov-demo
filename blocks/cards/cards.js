@@ -45,33 +45,6 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
  *    | Health Services | (image) | Learn about our services | /services |
  */
 
-export default function decorate(block) {
-  // Detect variation from block metadata or first row
-  const variation = detectVariation(block);
-
-  // Debug logging
-  console.log('🎴 Cards Block Debug:', {
-    variation,
-    rowCount: block.children.length,
-    firstCellText: block.querySelector('div:first-child div:first-child')?.textContent
-  });
-
-  const ul = document.createElement('ul');
-  ul.className = 'usa-card-group';
-
-  [...block.children].forEach((row, index) => {
-    const card = createUSWDSCard(row, variation);
-    if (card) {
-      ul.append(card);
-    } else {
-      console.log(`  ↳ Row ${index} skipped (likely header row)`);
-    }
-  });
-
-  block.textContent = '';
-  block.append(ul);
-}
-
 /**
  * Detect card variation from block classes
  * EDS automatically adds variation as CSS class (e.g., "Cards (Flag)" → class="cards flag")
@@ -79,28 +52,83 @@ export default function decorate(block) {
  */
 function detectVariation(block) {
   const classes = Array.from(block.classList);
-  console.log('  ↳ Block classes:', classes);
 
   // EDS adds variation name as lowercase class
   if (classes.includes('flag') && classes.includes('right')) {
-    console.log('  ↳ Detected: flag-right');
     return 'flag-right';
   }
   if (classes.includes('flag')) {
-    console.log('  ↳ Detected: flag');
     return 'flag';
   }
   if (classes.includes('inset')) {
-    console.log('  ↳ Detected: inset');
     return 'inset';
   }
   if (classes.includes('exdent')) {
-    console.log('  ↳ Detected: exdent');
     return 'exdent';
   }
 
-  console.log('  ↳ No variation detected, using default');
   return 'default';
+}
+
+/**
+ * Parse heading from first column
+ */
+function parseHeading(cell) {
+  if (!cell) return '';
+
+  const headingEl = cell.querySelector('h1, h2, h3, h4, h5, h6');
+  if (headingEl) {
+    return headingEl.textContent.trim();
+  }
+
+  return cell.textContent.trim();
+}
+
+/**
+ * Parse image from second column
+ */
+function parseImage(cell) {
+  if (!cell) return null;
+
+  const imgEl = cell.querySelector('img');
+  return imgEl ? imgEl.src : null;
+}
+
+/**
+ * Parse body text from third column
+ */
+function parseBody(cell) {
+  if (!cell) return '';
+
+  const content = cell.innerHTML.trim();
+  return content;
+}
+
+/**
+ * Parse link from fourth column
+ * Supports both hyperlinks (<a> tags) and plain text URLs
+ */
+function parseLink(cell) {
+  if (!cell) return null;
+
+  const linkEl = cell.querySelector('a');
+  if (linkEl) {
+    return {
+      href: linkEl.href,
+      text: linkEl.textContent.trim(),
+    };
+  }
+
+  // Handle plain text URLs
+  const cellText = cell.textContent.trim();
+  if (cellText) {
+    return {
+      href: cellText,
+      text: 'Learn More', // Default button text
+    };
+  }
+
+  return null;
 }
 
 /**
@@ -193,63 +221,20 @@ function createUSWDSCard(row, variation) {
   return li;
 }
 
-/**
- * Parse heading from first column
- */
-function parseHeading(cell) {
-  if (!cell) return '';
+export default function decorate(block) {
+  // Detect variation from block metadata or first row
+  const variation = detectVariation(block);
 
-  const headingEl = cell.querySelector('h1, h2, h3, h4, h5, h6');
-  if (headingEl) {
-    return headingEl.textContent.trim();
-  }
+  const ul = document.createElement('ul');
+  ul.className = 'usa-card-group';
 
-  return cell.textContent.trim();
-}
+  [...block.children].forEach((row) => {
+    const card = createUSWDSCard(row, variation);
+    if (card) {
+      ul.append(card);
+    }
+  });
 
-/**
- * Parse image from second column
- */
-function parseImage(cell) {
-  if (!cell) return null;
-
-  const imgEl = cell.querySelector('img');
-  return imgEl ? imgEl.src : null;
-}
-
-/**
- * Parse body text from third column
- */
-function parseBody(cell) {
-  if (!cell) return '';
-
-  const content = cell.innerHTML.trim();
-  return content;
-}
-
-/**
- * Parse link from fourth column
- * Supports both hyperlinks (<a> tags) and plain text URLs
- */
-function parseLink(cell) {
-  if (!cell) return null;
-
-  const linkEl = cell.querySelector('a');
-  if (linkEl) {
-    return {
-      href: linkEl.href,
-      text: linkEl.textContent.trim()
-    };
-  }
-
-  // Handle plain text URLs
-  const cellText = cell.textContent.trim();
-  if (cellText) {
-    return {
-      href: cellText,
-      text: 'Learn More' // Default button text
-    };
-  }
-
-  return null;
+  block.textContent = '';
+  block.append(ul);
 }

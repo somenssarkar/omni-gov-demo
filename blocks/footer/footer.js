@@ -390,7 +390,6 @@ export default async function decorate(block) {
   const fragment = await loadFragment(footerPath);
 
   if (!fragment) {
-    console.error('Footer fragment not found');
     return;
   }
   

@@ -195,7 +195,6 @@ export default async function decorate(block) {
   const fragment = await loadFragment(headerPath);
 
   if (!fragment) {
-    console.error('Header: Failed to load fragment from', headerPath);
     return;
   }
 
