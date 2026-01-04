@@ -65,3 +65,55 @@ body[data-site="service-member-health"] h3 {
   border-radius: var(--card-border-radius);
   box-shadow: var(--card-shadow);
 }
+
+/* Footer theme - Dark navy/blue military colors */
+body[data-site="service-member-health"] .footer {
+  .usa-footer {
+    background-color: #1a4480;
+  }
+  
+  .usa-footer__primary-section {
+    background-color: #1a4480;
+  }
+  
+  .usa-footer__secondary-section {
+    background-color: #2e5f8a;
+  }
+  
+  .usa-identifier {
+    background-color: #162e51;
+  }
+  
+  /* Ensure all footer text is white/light */
+  .usa-footer__primary-link,
+  .usa-footer__secondary-link,
+  .usa-footer__contact-links a,
+  .usa-footer__social-links a,
+  .usa-identifier__identity-domain,
+  .usa-identifier__identity-disclaimer {
+    color: #ffffff;
+  }
+  
+  /* Footer links hover state */
+  .usa-footer__secondary-link:hover,
+  .usa-footer__contact-links a:hover {
+    color: #adc8e6;
+    text-decoration: underline;
+  }
+  
+  /* Identifier links */
+  .usa-identifier__identity-disclaimer a,
+  .usa-identifier__required-link {
+    color: #adc8e6;
+  }
+  
+  .usa-identifier__identity-disclaimer a:hover,
+  .usa-identifier__required-link:hover {
+    color: #ffffff;
+  }
+  
+  /* Copyright text */
+  .usa-footer__logo-heading {
+    color: #ffffff;
+  }
+}
