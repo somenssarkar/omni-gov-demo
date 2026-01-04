@@ -282,17 +282,34 @@ function createIdentifier(identifierContent) {
   const identity = document.createElement('div');
   identity.className = 'usa-identifier__identity';
   
-  const identityText = identifierContent && identifierContent.length > 0
-    ? identifierContent[0].textContent.trim()
-    : 'Community Health Clinic';
+  // Parse identifier content from Google Doc
+  let domainText = 'Community Health Clinic';
+  let disclaimerHTML = 'An official website of the <a href="https://www.defense.gov">Department of War</a>';
+  
+  if (identifierContent && identifierContent.length > 0) {
+    // First paragraph is the domain name
+    const firstParagraph = identifierContent[0];
+    if (firstParagraph.textContent.trim()) {
+      domainText = firstParagraph.textContent.trim();
+    }
+    
+    // Second element should be the disclaimer with link
+    if (identifierContent.length > 1) {
+      const disclaimerParagraph = identifierContent[1];
+      // Clone and use the HTML content including links
+      const tempDiv = document.createElement('div');
+      tempDiv.appendChild(disclaimerParagraph.cloneNode(true));
+      disclaimerHTML = tempDiv.innerHTML;
+    }
+  }
   
   const p1 = document.createElement('p');
   p1.className = 'usa-identifier__identity-domain';
-  p1.textContent = identityText;
+  p1.textContent = domainText;
   
   const p2 = document.createElement('p');
   p2.className = 'usa-identifier__identity-disclaimer';
-  p2.innerHTML = 'An official website of the <a href="https://www.defense.gov">Department of War</a>';
+  p2.innerHTML = disclaimerHTML;
   
   identity.appendChild(p1);
   identity.appendChild(p2);
@@ -310,24 +327,47 @@ function createIdentifier(identifierContent) {
   const reqUl = document.createElement('ul');
   reqUl.className = 'usa-identifier__required-links-list';
   
-  const links = [
-    { text: 'About DoD', href: 'https://www.defense.gov/About/' },
-    { text: 'Accessibility', href: '/accessibility' },
-    { text: 'FOIA Requests', href: '/foia' }
-  ];
+  // Parse links from Google Doc (starting from 3rd element onwards)
+  if (identifierContent && identifierContent.length > 2) {
+    // Elements after the first two paragraphs should contain links
+    for (let i = 2; i < identifierContent.length; i += 1) {
+      const linkElements = identifierContent[i].querySelectorAll('a');
+      linkElements.forEach((linkEl) => {
+        const li = document.createElement('li');
+        li.className = 'usa-identifier__required-links-item';
+        
+        const a = document.createElement('a');
+        a.href = linkEl.href;
+        a.className = 'usa-identifier__required-link';
+        a.textContent = linkEl.textContent;
+        
+        li.appendChild(a);
+        reqUl.appendChild(li);
+      });
+    }
+  }
   
-  links.forEach((link) => {
-    const li = document.createElement('li');
-    li.className = 'usa-identifier__required-links-item';
+  // If no links found in content, use defaults
+  if (reqUl.children.length === 0) {
+    const defaultLinks = [
+      { text: 'About DoD', href: 'https://www.defense.gov/About/' },
+      { text: 'Accessibility', href: '/accessibility' },
+      { text: 'FOIA Requests', href: '/foia' }
+    ];
     
-    const a = document.createElement('a');
-    a.href = link.href;
-    a.className = 'usa-identifier__required-link';
-    a.textContent = link.text;
-    
-    li.appendChild(a);
-    reqUl.appendChild(li);
-  });
+    defaultLinks.forEach((link) => {
+      const li = document.createElement('li');
+      li.className = 'usa-identifier__required-links-item';
+      
+      const a = document.createElement('a');
+      a.href = link.href;
+      a.className = 'usa-identifier__required-link';
+      a.textContent = link.text;
+      
+      li.appendChild(a);
+      reqUl.appendChild(li);
+    });
+  }
   
   reqNav.appendChild(reqUl);
   reqLinksDiv.appendChild(reqNav);
