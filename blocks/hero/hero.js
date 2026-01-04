@@ -34,26 +34,86 @@
  * Note: Background image can be set via CSS using site-specific styling
  */
 
+/**
+ * Check if row is a header row containing "Hero" text
+ */
+function isHeaderRow(row) {
+  const firstCell = row.querySelector('div:first-child');
+  return firstCell && firstCell.textContent.trim().toLowerCase().startsWith('hero');
+}
+
+/**
+ * Parse callout from first column
+ */
+function parseCallout(cell) {
+  if (!cell) return '';
+
+  const text = cell.textContent.trim();
+  return text || '';
+}
+
+/**
+ * Parse heading from second column
+ */
+function parseHeading(cell) {
+  if (!cell) return '';
+
+  const headingEl = cell.querySelector('h1, h2, h3, h4, h5, h6');
+  if (headingEl) {
+    return headingEl.textContent.trim();
+  }
+
+  return cell.textContent.trim();
+}
+
+/**
+ * Parse body text from third column
+ */
+function parseBody(cell) {
+  if (!cell) return '';
+
+  const content = cell.innerHTML.trim();
+  return content;
+}
+
+/**
+ * Parse link from fourth column
+ * Supports both hyperlinks (<a> tags) and plain text URLs
+ */
+function parseLink(cell) {
+  if (!cell) return null;
+
+  const linkEl = cell.querySelector('a');
+  if (linkEl) {
+    return {
+      href: linkEl.href,
+      text: linkEl.textContent.trim(),
+    };
+  }
+
+  // Handle plain text URLs
+  const cellText = cell.textContent.trim();
+  if (cellText) {
+    return {
+      href: cellText,
+      text: 'Call to action', // Default button text
+    };
+  }
+
+  return null;
+}
+
 export default function decorate(block) {
   // Get the first (and should be only) row of content
   const rows = [...block.children];
 
-  // Debug logging
-  console.log('🦸 Hero Block Debug:', {
-    rowCount: rows.length,
-    firstCellText: rows[0]?.querySelector('div:first-child')?.textContent
-  });
-
   if (rows.length === 0) {
-    console.warn('Hero block has no content rows');
     return;
   }
 
   // Parse the first data row (skip header row if it says "Hero")
-  let contentRow = rows[0];
-  if (rows.length > 1 && isHeaderRow(rows[0])) {
-    contentRow = rows[1];
-  }
+  const [firstRow, secondRow] = rows;
+  const contentRow = (rows.length > 1 && isHeaderRow(firstRow)) ? secondRow : firstRow;
 
   const cells = [...contentRow.children];
 
@@ -113,73 +173,4 @@ export default function decorate(block) {
   // Replace block content
   block.textContent = '';
   block.append(section);
-}
-
-/**
- * Check if row is a header row containing "Hero" text
- */
-function isHeaderRow(row) {
-  const firstCell = row.querySelector('div:first-child');
-  return firstCell && firstCell.textContent.trim().toLowerCase().startsWith('hero');
-}
-
-/**
- * Parse callout from first column
- */
-function parseCallout(cell) {
-  if (!cell) return '';
-
-  const text = cell.textContent.trim();
-  return text || '';
-}
-
-/**
- * Parse heading from second column
- */
-function parseHeading(cell) {
-  if (!cell) return '';
-
-  const headingEl = cell.querySelector('h1, h2, h3, h4, h5, h6');
-  if (headingEl) {
-    return headingEl.textContent.trim();
-  }
-
-  return cell.textContent.trim();
-}
-
-/**
- * Parse body text from third column
- */
-function parseBody(cell) {
-  if (!cell) return '';
-
-  const content = cell.innerHTML.trim();
-  return content;
-}
-
-/**
- * Parse link from fourth column
- * Supports both hyperlinks (<a> tags) and plain text URLs
- */
-function parseLink(cell) {
-  if (!cell) return null;
-
-  const linkEl = cell.querySelector('a');
-  if (linkEl) {
-    return {
-      href: linkEl.href,
-      text: linkEl.textContent.trim()
-    };
-  }
-
-  // Handle plain text URLs
-  const cellText = cell.textContent.trim();
-  if (cellText) {
-    return {
-      href: cellText,
-      text: 'Call to action' // Default button text
-    };
-  }
-
-  return null;
 }

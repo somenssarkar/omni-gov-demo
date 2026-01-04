@@ -396,7 +396,7 @@ async function decorateTemplateAndTheme() {
     if (!siteName) {
       const pathMatch = pathname.match(/^\/sites\/([^/]+)\//);
       if (pathMatch) {
-        siteName = pathMatch[1];
+        [, siteName] = pathMatch;
       }
     }
 

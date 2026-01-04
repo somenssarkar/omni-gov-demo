@@ -27,7 +27,7 @@ function makeLinksRelative(container) {
  *
  * EDS Authoring Structure (Google Docs /header):
  * Use NATIVE Google Docs formatting, NOT markdown syntax.
- * 
+ *
  * ┌──────────────────────────────────────────────────────────────┐
  * │ Header                         ← Apply Heading 1 style       │
  * │                                                              │
@@ -48,11 +48,11 @@ function makeLinksRelative(container) {
  * │ • Search                       ← Bullet, link (gets 🔍 icon) │
  * │ • Login                        ← Bullet, link (gets 👤 icon) │
  * └──────────────────────────────────────────────────────────────┘
- * 
+ *
  * *Link Format: Use full AEM preview URLs for validation:
  *   https://main--omni-gov-demo--somenssarkar.aem.page/services
  *   Code automatically converts to relative paths.
- * 
+ *
  * How to Apply in Google Docs:
  * 1. Headings: Select text → Format → Paragraph styles → Heading 1/2
  * 2. Links: Select text → Ctrl+K (or Cmd+K) → Paste URL → Apply
@@ -205,7 +205,6 @@ export default async function decorate(block) {
   const parsed = parseFragmentByHeadings(fragment);
 
   if (!parsed.brand && !parsed.sections) {
-    console.error('Header: Could not find Brand or Sections content');
     return;
   }
 
