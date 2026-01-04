@@ -1,0 +1,53 @@
+// Title Block Styles
+// Import USWDS typography system
+
+@forward "uswds-typography";
+
+// Title block wrapper
+.title {
+  margin-bottom: var(--uswds-spacing-4);
+  
+  &.text-center {
+    text-align: center;
+  }
+  
+  // Heading styles using USWDS typography tokens
+  h1, h2, h3 {
+    margin-top: 0;
+    margin-bottom: var(--uswds-spacing-2);
+    font-family: var(--uswds-font-family-heading);
+    font-weight: var(--uswds-font-weight-bold);
+    line-height: var(--uswds-line-height-heading);
+    color: var(--uswds-color-ink);
+  }
+  
+  // Size hierarchy from USWDS
+  h1 {
+    font-size: var(--uswds-font-size-3xl);
+    
+    @media (min-width: 640px) {
+      font-size: var(--uswds-font-size-4xl);
+    }
+  }
+  
+  h2 {
+    font-size: var(--uswds-font-size-2xl);
+    
+    @media (min-width: 640px) {
+      font-size: var(--uswds-font-size-3xl);
+    }
+  }
+  
+  h3 {
+    font-size: var(--uswds-font-size-xl);
+    
+    @media (min-width: 640px) {
+      font-size: var(--uswds-font-size-2xl);
+    }
+  }
+  
+  // Center alignment utility
+  .text-center {
+    text-align: center;
+  }
+}
