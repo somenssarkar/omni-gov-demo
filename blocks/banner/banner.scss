@@ -10,6 +10,10 @@
 // Keep customizations minimal to maintain USWDS compliance
 
 .banner {
-  // No custom styles needed - USWDS banner is complete as-is
-  // Add site-specific overrides here only if absolutely necessary
+  // Ensure flag image displays correctly
+  .usa-banner__header-flag-img {
+    width: 1rem;
+    height: auto;
+    margin-right: 0.5rem;
+  }
 }

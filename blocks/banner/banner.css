@@ -2125,4 +2125,10 @@ through all possible variants
   right: auto;
 }
 
+.banner .usa-banner__header-flag-img {
+  width: 1rem;
+  height: auto;
+  margin-right: 0.5rem;
+}
+
 /*# sourceMappingURL=banner.css.map */
