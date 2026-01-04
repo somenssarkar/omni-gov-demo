@@ -376,10 +376,6 @@ export default async function decorate(block) {
   const primaryGrid = document.createElement('div');
   primaryGrid.className = 'grid-row grid-gap';
   
-  // Main content column (navigation)
-  const mainCol = document.createElement('div');
-  mainCol.className = 'tablet:grid-col-8';
-  
   const nav = document.createElement('nav');
   nav.className = 'usa-footer__nav';
   nav.setAttribute('aria-label', 'Footer navigation');
@@ -387,7 +383,7 @@ export default async function decorate(block) {
   const navGrid = document.createElement('div');
   navGrid.className = 'grid-row grid-gap';
   
-  // Create columns for each section
+  // Create columns for each section (all four columns are equal siblings)
   const footerSections = [
     { key: 'about-mhs', heading: 'About MHS' },
     { key: 'services', heading: 'Services' },
@@ -400,19 +396,16 @@ export default async function decorate(block) {
     }
   });
   
-  nav.appendChild(navGrid);
-  mainCol.appendChild(nav);
-  primaryGrid.appendChild(mainCol);
-  
-  // Social links column (Connect With Us)
-  const socialCol = document.createElement('div');
-  socialCol.className = 'tablet:grid-col-4';
-  
+  // Add Connect With Us column to the same grid as other columns
   if (sections['connect-with-us']) {
+    const socialCol = document.createElement('div');
+    socialCol.className = 'mobile-lg:grid-col-6 desktop:grid-col-3';
     socialCol.appendChild(createSocialLinks(sections['connect-with-us']));
+    navGrid.appendChild(socialCol);
   }
   
-  primaryGrid.appendChild(socialCol);
+  nav.appendChild(navGrid);
+  primaryGrid.appendChild(nav);
   primaryContainer.appendChild(primaryGrid);
   primary.appendChild(primaryContainer);
   footer.appendChild(primary);
