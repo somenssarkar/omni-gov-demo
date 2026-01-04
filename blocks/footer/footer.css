@@ -4452,6 +4452,15 @@ through all possible variants
 .footer .usa-footer__primary-link {
   margin-top: 0;
   margin-bottom: 1rem;
+  line-height: 1.2;
+  align-self: start;
+}
+.footer .usa-footer__primary-content {
+  display: flex;
+  flex-direction: column;
+}
+.footer .usa-footer__primary-content .usa-footer__primary-link {
+  flex-shrink: 0;
 }
 .footer .usa-footer__social-links .usa-social-link__icon {
   width: 1.5rem;
@@ -4463,6 +4472,9 @@ through all possible variants
 .footer .usa-footer__logo .usa-footer__logo-heading {
   text-align: right;
   margin: 0;
+  font-size: 0.93rem;
+  font-weight: normal;
+  line-height: 1.5;
 }
 .footer .usa-footer__secondary-section .grid-row {
   align-items: center;

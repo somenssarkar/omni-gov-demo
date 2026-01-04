@@ -16,10 +16,22 @@
     }
   }
   
-  // Ensure all footer headings align
+  // Ensure all footer headings align - including Connect With Us
   .usa-footer__primary-link {
     margin-top: 0;
     margin-bottom: 1rem;
+    line-height: 1.2;
+    align-self: start;
+  }
+  
+  // Ensure Connect With Us column aligns with other columns
+  .usa-footer__primary-content {
+    display: flex;
+    flex-direction: column;
+    
+    .usa-footer__primary-link {
+      flex-shrink: 0;
+    }
   }
   
   // Reduce social icon size
@@ -30,13 +42,16 @@
     }
   }
   
-  // Align copyright text to the right
+  // Copyright text styling - match footer secondary link size
   .usa-footer__logo {
     justify-content: flex-end;
     
     .usa-footer__logo-heading {
       text-align: right;
       margin: 0;
+      font-size: 0.93rem;
+      font-weight: normal;
+      line-height: 1.5;
     }
   }
   
