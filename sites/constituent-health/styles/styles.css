@@ -62,3 +62,55 @@ body[data-site="constituent-health"] h3 {
   border-radius: var(--card-border-radius);
   box-shadow: var(--card-shadow);
 }
+
+/* Footer theme - Dark blue background */
+body[data-site="constituent-health"] .footer {
+  .usa-footer {
+    background-color: #162e51;
+  }
+  
+  .usa-footer__primary-section {
+    background-color: #162e51;
+  }
+  
+  .usa-footer__secondary-section {
+    background-color: #1f4068;
+  }
+  
+  .usa-identifier {
+    background-color: #0d1f38;
+  }
+  
+  /* Ensure all footer text is white/light */
+  .usa-footer__primary-link,
+  .usa-footer__secondary-link,
+  .usa-footer__contact-links a,
+  .usa-footer__social-links a,
+  .usa-identifier__identity-domain,
+  .usa-identifier__identity-disclaimer {
+    color: #ffffff;
+  }
+  
+  /* Footer links hover state */
+  .usa-footer__secondary-link:hover,
+  .usa-footer__contact-links a:hover {
+    color: #02bfe7;
+    text-decoration: underline;
+  }
+  
+  /* Identifier links */
+  .usa-identifier__identity-disclaimer a,
+  .usa-identifier__required-link {
+    color: #5eb3e4;
+  }
+  
+  .usa-identifier__identity-disclaimer a:hover,
+  .usa-identifier__required-link:hover {
+    color: #ffffff;
+  }
+  
+  /* Copyright text */
+  .usa-footer__logo-heading {
+    color: #ffffff;
+  }
+}
