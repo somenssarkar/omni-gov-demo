@@ -1,0 +1,52 @@
+// Text Block Styles
+// Import USWDS typography system
+
+@forward "uswds-typography";
+
+// Text block wrapper
+.text {
+  margin-bottom: var(--uswds-spacing-4);
+  
+  &.text-center {
+    text-align: center;
+  }
+  
+  // Paragraph styles using USWDS typography tokens
+  p {
+    margin-top: 0;
+    margin-bottom: var(--uswds-spacing-2);
+    font-family: var(--uswds-font-family-body);
+    font-size: var(--uswds-font-size-body);
+    line-height: var(--uswds-line-height-body);
+    max-width: var(--uswds-measure-5); // Readable line length
+    
+    // Center-aligned paragraphs should not have max-width constraint
+    &.text-center {
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+  
+  // Intro paragraph style (larger, prominent)
+  p.usa-intro {
+    font-size: var(--uswds-font-size-lg);
+    line-height: var(--uswds-line-height-heading);
+    font-weight: var(--uswds-font-weight-normal);
+    max-width: var(--uswds-measure-4);
+    
+    @media (min-width: 640px) {
+      font-size: var(--uswds-font-size-xl);
+    }
+    
+    &.text-center {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+  
+  // Multiple paragraphs spacing
+  p + p {
+    margin-top: var(--uswds-spacing-3);
+  }
+}

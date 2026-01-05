@@ -20,7 +20,9 @@
     "watch:footer": "sass --load-path=node_modules/@uswds/uswds/packages --watch blocks/footer/footer.scss:blocks/footer/footer.css",
     "build:title": "sass --load-path=node_modules/@uswds/uswds/packages --style=expanded blocks/title/title.scss:blocks/title/title.css",
     "watch:title": "sass --load-path=node_modules/@uswds/uswds/packages --watch blocks/title/title.scss:blocks/title/title.css",
-    "build:all": "npm run build:banner && npm run build:cards && npm run build:hero && npm run build:header && npm run build:footer && npm run build:title"
+    "build:text": "sass --load-path=node_modules/@uswds/uswds/packages --style=expanded blocks/text/text.scss:blocks/text/text.css",
+    "watch:text": "sass --load-path=node_modules/@uswds/uswds/packages --watch blocks/text/text.scss:blocks/text/text.css",
+    "build:all": "npm run build:banner && npm run build:cards && npm run build:hero && npm run build:header && npm run build:footer && npm run build:title && npm run build:text"
   },
   "repository": {
     "type": "git",
