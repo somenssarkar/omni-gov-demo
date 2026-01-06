@@ -240,17 +240,42 @@ function createFeaturedCard(row) {
   const linkUrl = cells[4] ? cells[4].textContent.trim() : null;
   const linkText = cells[5] ? cells[5].textContent.trim() : null;
 
-  // Header with heading and optional time badge
-  if (heading) {
+  // Header with icon + heading on left, time badge on right
+  if (heading || iconOrImage || timeText) {
     const header = document.createElement('div');
     header.className = 'usa-card__header';
 
-    const h3 = document.createElement('h3');
-    h3.className = 'usa-card__heading';
-    h3.textContent = heading;
-    header.append(h3);
+    // Left section: icon + heading
+    const headerLeft = document.createElement('div');
+    headerLeft.className = 'usa-card__header-left';
 
-    // Add time badge if provided
+    // Add icon if provided
+    if (iconOrImage) {
+      if (iconOrImage.type === 'icon') {
+        const iconEl = createIconElement(iconOrImage.name);
+        headerLeft.append(iconEl);
+      } else if (iconOrImage.type === 'image') {
+        const imgWrapper = document.createElement('div');
+        imgWrapper.className = 'usa-card__icon-img';
+        const img = document.createElement('img');
+        img.src = iconOrImage.src;
+        img.alt = '';
+        imgWrapper.append(img);
+        headerLeft.append(imgWrapper);
+      }
+    }
+
+    // Add heading
+    if (heading) {
+      const h3 = document.createElement('h3');
+      h3.className = 'usa-card__heading';
+      h3.textContent = heading;
+      headerLeft.append(h3);
+    }
+
+    header.append(headerLeft);
+
+    // Right section: time badge
     if (timeText) {
       const timeBadge = createTimeBadge(timeText);
       if (timeBadge) {
@@ -259,25 +284,6 @@ function createFeaturedCard(row) {
     }
 
     container.append(header);
-  }
-
-  // Icon or Media
-  if (iconOrImage) {
-    if (iconOrImage.type === 'icon') {
-      const iconEl = createIconElement(iconOrImage.name);
-      container.insertBefore(iconEl, container.firstChild); // Insert before header
-    } else if (iconOrImage.type === 'image') {
-      const media = document.createElement('div');
-      media.className = 'usa-card__media';
-
-      const imgWrapper = document.createElement('div');
-      imgWrapper.className = 'usa-card__img';
-
-      const picture = createOptimizedPicture(iconOrImage.src, heading || 'Card image', false, [{ width: '750' }]);
-      imgWrapper.append(picture);
-      media.append(imgWrapper);
-      container.insertBefore(media, container.firstChild); // Insert before header
-    }
   }
 
   // Body
