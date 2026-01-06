@@ -2284,18 +2284,11 @@ through all possible variants
 .cards .usa-card__footer .usa-button:hover {
   background-color: var(--uswds-color-primary-dark);
 }
-.cards .usa-card--featured .usa-card__header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-.cards .usa-card--featured .usa-card__header-left {
+.cards .usa-card--featured .usa-card__top-row {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  flex: 1;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
 .cards .usa-card--featured .usa-card__icon-wrapper {
   flex-shrink: 0;
@@ -2324,6 +2317,9 @@ through all possible variants
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+.cards .usa-card--featured .usa-card__header {
+  margin-bottom: 0.75rem;
 }
 .cards .usa-card--featured .usa-card__heading {
   margin: 0;

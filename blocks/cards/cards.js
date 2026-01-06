@@ -240,20 +240,16 @@ function createFeaturedCard(row) {
   const linkUrl = cells[4] ? cells[4].textContent.trim() : null;
   const linkText = cells[5] ? cells[5].textContent.trim() : null;
 
-  // Header with icon + heading on left, time badge on right
-  if (heading || iconOrImage || timeText) {
-    const header = document.createElement('div');
-    header.className = 'usa-card__header';
-
-    // Left section: icon + heading
-    const headerLeft = document.createElement('div');
-    headerLeft.className = 'usa-card__header-left';
+  // Top row: icon on left, time badge on right
+  if (iconOrImage || timeText) {
+    const topRow = document.createElement('div');
+    topRow.className = 'usa-card__top-row';
 
     // Add icon if provided
     if (iconOrImage) {
       if (iconOrImage.type === 'icon') {
         const iconEl = createIconElement(iconOrImage.name);
-        headerLeft.append(iconEl);
+        topRow.append(iconEl);
       } else if (iconOrImage.type === 'image') {
         const imgWrapper = document.createElement('div');
         imgWrapper.className = 'usa-card__icon-img';
@@ -261,27 +257,30 @@ function createFeaturedCard(row) {
         img.src = iconOrImage.src;
         img.alt = '';
         imgWrapper.append(img);
-        headerLeft.append(imgWrapper);
+        topRow.append(imgWrapper);
       }
     }
 
-    // Add heading
-    if (heading) {
-      const h3 = document.createElement('h3');
-      h3.className = 'usa-card__heading';
-      h3.textContent = heading;
-      headerLeft.append(h3);
-    }
-
-    header.append(headerLeft);
-
-    // Right section: time badge
+    // Add time badge on right
     if (timeText) {
       const timeBadge = createTimeBadge(timeText);
       if (timeBadge) {
-        header.append(timeBadge);
+        topRow.append(timeBadge);
       }
     }
+
+    container.append(topRow);
+  }
+
+  // Second row: heading
+  if (heading) {
+    const header = document.createElement('div');
+    header.className = 'usa-card__header';
+
+    const h3 = document.createElement('h3');
+    h3.className = 'usa-card__heading';
+    h3.textContent = heading;
+    header.append(h3);
 
     container.append(header);
   }

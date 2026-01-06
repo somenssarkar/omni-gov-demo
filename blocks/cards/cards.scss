@@ -59,21 +59,12 @@
 
   // Featured Card Variation Styles
   .usa-card--featured {
-    // Header layout: icon+heading (left) | time badge (right)
-    .usa-card__header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    // Left section with icon and heading
-    .usa-card__header-left {
+    // Top row: icon (left) | time badge (right)
+    .usa-card__top-row {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      flex: 1;
+      justify-content: space-between;
+      margin-bottom: 1rem;
     }
 
     // Icon with circular background
@@ -109,6 +100,11 @@
         height: 100%;
         object-fit: contain;
       }
+    }
+
+    // Header section (second row with heading only)
+    .usa-card__header {
+      margin-bottom: 0.75rem;
     }
 
     // Heading
