@@ -2263,3 +2263,93 @@ through all possible variants
 .cards .usa-card__footer .usa-button:hover {
   background-color: var(--uswds-color-primary-dark);
 }
+.cards .usa-card--featured .usa-card__icon-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.cards .usa-card--featured .usa-card__icon-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #005ea2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+}
+.cards .usa-card--featured .usa-card__icon {
+  width: 100%;
+  height: 100%;
+  filter: brightness(0) invert(1);
+}
+.cards .usa-card--featured .usa-card__time-badge {
+  display: inline-block;
+  background-color: #e7f4f9;
+  color: #005ea2;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  white-space: nowrap;
+}
+.cards .usa-card--featured .usa-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.cards .usa-card--featured .usa-card__link {
+  color: var(--uswds-color-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+.cards .usa-card--featured .usa-card__link:hover {
+  text-decoration: underline;
+}
+.cards .usa-card--compact .usa-card__container {
+  padding: 1rem;
+  min-height: auto;
+}
+.cards .usa-card--compact .usa-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0;
+}
+.cards .usa-card--compact .usa-card__heading {
+  flex: 1;
+  margin: 0;
+  font-size: 1rem;
+}
+.cards .usa-card--compact .usa-card__heading a {
+  color: var(--uswds-color-primary);
+  text-decoration: none;
+}
+.cards .usa-card--compact .usa-card__heading a:hover {
+  text-decoration: underline;
+}
+.cards .usa-card--compact .usa-card__time-badge {
+  display: inline-block;
+  background-color: #f0f0f0;
+  color: #565c65;
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.cards .usa-card--compact .usa-card__body,
+.cards .usa-card--compact .usa-card__footer {
+  display: none;
+}
+.cards .usa-card--compact:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=cards.css.map */
