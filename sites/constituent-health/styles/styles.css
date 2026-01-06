@@ -63,28 +63,35 @@ body[data-site="constituent-health"] h3 {
   box-shadow: var(--card-shadow);
 }
 
-/* Hero section background gradient for split-layout approach */
-main {
+/* Hero background variation - Blue gradient */
+body[data-site="constituent-health"] .columns.hero-blue {
   background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-  min-height: 100vh;
+  padding: 3rem 1.25rem;
+  margin: 0;
 }
 
-/* Ensure text is readable on blue background */
-main .title h1,
-main .title h2,
-main .title h3,
-main .text p,
-main .cards {
+body[data-site="constituent-health"] .columns.hero-blue .title h1,
+body[data-site="constituent-health"] .columns.hero-blue .title h2,
+body[data-site="constituent-health"] .columns.hero-blue .title h3,
+body[data-site="constituent-health"] .columns.hero-blue .text p,
+body[data-site="constituent-health"] .columns.hero-blue .cards {
   color: white;
 }
 
-/* Adjust card backgrounds for visibility on blue */
-main .usa-card {
+body[data-site="constituent-health"] .columns.hero-blue .usa-card {
   background-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-main .usa-card:hover {
+body[data-site="constituent-health"] .columns.hero-blue .usa-card:hover {
   background-color: rgba(255, 255, 255, 0.15);
+}
+
+body[data-site="constituent-health"] .columns.hero-blue .usa-card .usa-card__heading {
+  color: white;
+}
+
+body[data-site="constituent-health"] .columns.hero-blue .usa-card .usa-card__body {
+  color: rgba(255, 255, 255, 0.9);
 }

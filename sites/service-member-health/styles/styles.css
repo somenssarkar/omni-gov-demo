@@ -66,33 +66,36 @@ body[data-site="service-member-health"] h3 {
   box-shadow: var(--card-shadow);
 }
 
-/* Navy gradient background for hero/split layout pages */
-main {
+/* Hero background variation - Navy gradient */
+body[data-site="service-member-health"] .columns.hero-navy {
   background: linear-gradient(135deg, #1a4480 0%, #2563eb 100%);
-  min-height: 100vh;
+  padding: 3rem 1.25rem;
+  margin: 0;
 }
 
-/* White text on navy background */
-main .title h1,
-main .title h2,
-main .title h3,
-main .text p,
-main .cards {
+body[data-site="service-member-health"] .columns.hero-navy .title h1,
+body[data-site="service-member-health"] .columns.hero-navy .title h2,
+body[data-site="service-member-health"] .columns.hero-navy .title h3,
+body[data-site="service-member-health"] .columns.hero-navy .text p,
+body[data-site="service-member-health"] .columns.hero-navy .cards {
   color: white;
 }
 
-/* Transparent cards with blur effect on navy background */
-main .usa-card {
+body[data-site="service-member-health"] .columns.hero-navy .usa-card {
   background-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-main .usa-card .usa-card__heading {
+body[data-site="service-member-health"] .columns.hero-navy .usa-card:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+body[data-site="service-member-health"] .columns.hero-navy .usa-card .usa-card__heading {
   color: white;
 }
 
-main .usa-card .usa-card__body {
+body[data-site="service-member-health"] .columns.hero-navy .usa-card .usa-card__body {
   color: rgba(255, 255, 255, 0.9);
 }
 
