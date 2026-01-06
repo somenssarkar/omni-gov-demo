@@ -62,3 +62,29 @@ body[data-site="constituent-health"] h3 {
   border-radius: var(--card-border-radius);
   box-shadow: var(--card-shadow);
 }
+
+/* Hero section background gradient for split-layout approach */
+main {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  min-height: 100vh;
+}
+
+/* Ensure text is readable on blue background */
+main .title h1,
+main .title h2,
+main .title h3,
+main .text p,
+main .cards {
+  color: white;
+}
+
+/* Adjust card backgrounds for visibility on blue */
+main .usa-card {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+main .usa-card:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}

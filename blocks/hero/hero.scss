@@ -29,12 +29,56 @@
     color: white;
   }
 
-  // CTA button should use site theme
+  // CTA buttons container - multiple actions support
+  .usa-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+
+    // Stack vertically on mobile
+    @media (max-width: 640px) {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .usa-button {
+        width: 100%;
+      }
+    }
+  }
+
+  // Primary button should use site theme
   .usa-hero__callout .usa-button {
     background-color: var(--uswds-color-primary);
 
     &:hover {
       background-color: var(--uswds-color-primary-dark);
+    }
+  }
+
+  // Outlined button (secondary action)
+  .usa-hero__callout .usa-button--outline {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: white;
+      color: white;
+    }
+  }
+
+  // Unstyled button (text link style)
+  .usa-hero__callout .usa-button--unstyled {
+    background-color: transparent;
+    color: white;
+    text-decoration: underline;
+    padding: 0.5rem 0;
+
+    &:hover {
+      color: var(--uswds-color-accent-cool, #00bde3);
+      background-color: transparent;
     }
   }
 }

@@ -66,6 +66,36 @@ body[data-site="service-member-health"] h3 {
   box-shadow: var(--card-shadow);
 }
 
+/* Navy gradient background for hero/split layout pages */
+main {
+  background: linear-gradient(135deg, #1a4480 0%, #2563eb 100%);
+  min-height: 100vh;
+}
+
+/* White text on navy background */
+main .title h1,
+main .title h2,
+main .title h3,
+main .text p,
+main .cards {
+  color: white;
+}
+
+/* Transparent cards with blur effect on navy background */
+main .usa-card {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+main .usa-card .usa-card__heading {
+  color: white;
+}
+
+main .usa-card .usa-card__body {
+  color: rgba(255, 255, 255, 0.9);
+}
+
 /* Footer theme - Dark navy/blue military colors */
 body[data-site="service-member-health"] .footer {
   .usa-footer {
