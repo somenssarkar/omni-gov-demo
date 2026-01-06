@@ -2247,7 +2247,26 @@ through all possible variants
   }
 }
 
+.cards .usa-card-group {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+@media (min-width: 640px) {
+  .cards .usa-card-group {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .cards .usa-card-group {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
 .cards .usa-card {
+  width: 100%;
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 .cards .usa-card:hover {

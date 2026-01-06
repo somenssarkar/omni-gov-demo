@@ -10,8 +10,29 @@
 // These styles cascade with site themes (constituent-health / service-member-health)
 
 .cards {
-  // Add subtle hover effect for better interactivity
+  // Ensure card group displays as grid
+  .usa-card-group {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    // Tablet: 2 columns
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    // Desktop: 4 columns
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  // Individual cards should span full column
   .usa-card {
+    width: 100%;
     transition: box-shadow 0.2s ease, transform 0.2s ease;
 
     &:hover {
